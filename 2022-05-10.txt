@@ -431,7 +431,7 @@ or available locally via: info '(coreutils) tail invocation'
  ex) -3 : 뒤에서 3줄
 
 
-8. mkdir : 파일생성
+8. mkdir : 디렉토리 생성
 ------------------------------------------------------------------------------------------
 $ mkdir --help
 Usage: mkdir [OPTION]... DIRECTORY...
@@ -456,6 +456,7 @@ or available locally via: info '(coreutils) mkdir invocation'
 
  * 옵션
  1) -p : 하위 디렉토리까지 생성
+
 
 
 2. [ git 명령어 ]
@@ -516,6 +517,7 @@ See 'git help git' for an overview of the system.
 
 1. git init : git으로 폴더를 관리하기 위해 사용
 
+
 2. git status : 현재의 상태
 ********************************************************************************************
   git status
@@ -552,29 +554,36 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ********************************************************************************************
 
+
 3. git add : 파일을 관리하기 위해 사용
  * 파일이 녹색이 됨 -> commit 해야하는 상태
  ** git add --all : 모든 파일을 올림
+
 
 4. git commit : 파일 관리
  * 옵션 -m : 메세지를 남김
  ex) git commit -m "메세지" <파일명>
  ** git commit -m "메세지" : 특정파일이 아닌 모든 파일을 commit
  
+
 5. git rm : 관리 파일 목록에서 제외
  * git rm --cache <file>
 
+
 **********************************************
-working directory : git으로 관리하는 공간
-               commit (*기록 관리 가능)
-  파일 관리 ---> staging 영역
-               <--- 
-                rm
+* working directory : git으로 관리하는 공간
+               
+working  commit (*기록 관리 가능)
+directory ----> staging 영역
+           <---- 
+            rm
 **********************************************
+
 
 6. git log : 로그확인
  * 옵션 
  1) --oneling : 한줄로 보기
+
 
 7. git remote : 원격지에 업로드
 -------------------------------------
@@ -591,6 +600,9 @@ working directory : git으로 관리하는 공간
  5) git pull <원격지 이름> <사용자> : 원격지에서 로컬에 내려받음
   ex) $ git pull origin master
 
+
+8. git commit -am : add + commit
+
 -----------------------------------------------------
  [ git config ]
 
@@ -603,7 +615,6 @@ working directory : git으로 관리하는 공간
  2) git config --global user.email
 -------------------------------------------------------
 
-8. git commit -am : add + commit
 
 ********************************************************************************************
   git error  
@@ -655,12 +666,14 @@ fatal: paths 'f1.txt ...' with -a does not make sense
 ********************************************************************************************
 
 
+
 3. [ github website ]
 1. 로그인 -> 고양이 -> 파일생성
  * 옵션 
  1) Public : 전체공개
  2) Pravate : 일부에게 공개
  3) Add .gitignore : window/mac등 운영체제 설정이 다르므로 내가 설정한 것을 숨김
+
 
 
 4. [ git 기타 사용법 ]
