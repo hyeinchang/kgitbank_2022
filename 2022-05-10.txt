@@ -186,7 +186,7 @@ or available locally via: info '(coreutils) rm invocation'
 
 4. vim : 파일편집
  * i : (insert) 파일 내용 작성
- * : wq : 저장후 파일 닫기
+ * :wq : 저장후 파일 닫기
  * 바로 파일 생성후 파일 내용 작성 가능
 
 5. cat : 파일내용 확인
