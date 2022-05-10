@@ -132,7 +132,44 @@ or available locally via: info '(coreutils) ls invocation'
  2) -R : 계층
  3) -a : 숨김파일까지 확인
 
+
 2. touch : 파일생성
+------------------------------------------------------------------------------------------
+$ touch --help
+Usage: touch [OPTION]... FILE...
+Update the access and modification times of each FILE to the current time.
+
+A FILE argument that does not exist is created empty, unless -c or -h
+is supplied.
+
+A FILE argument string of - is handled specially and causes touch to
+change the times of the file associated with standard output.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a                     change only the access time
+  -c, --no-create        do not create any files
+  -d, --date=STRING      parse STRING and use it instead of current time
+  -f                     (ignored)
+  -h, --no-dereference   affect each symbolic link instead of any referenced
+                         file (useful only on systems that can change the
+                         timestamps of a symlink)
+  -m                     change only the modification time
+  -r, --reference=FILE   use this file's times instead of current time
+  -t STAMP               use [[CC]YY]MMDDhhmm[.ss] instead of current time
+      --time=WORD        change the specified time:
+                           WORD is access, atime, or use: equivalent to -a
+                           WORD is modify or mtime: equivalent to -m
+      --help     display this help and exit
+      --version  output version information and exit
+
+Note that the -d and -t options accept different time-date formats.
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/touch>
+or available locally via: info '(coreutils) touch invocation'
+------------------------------------------------------------------------------------------
+
 
 3. rm : 삭제
 ------------------------------------------------------------------------------------------
@@ -184,23 +221,242 @@ or available locally via: info '(coreutils) rm invocation'
  2) -f : 강제
  3) -r : 디렉토리 삭제
 
+
 4. vim : 파일편집
+------------------------------------------------------------------------------------------
+$ vim --help
+VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Nov 22 2021 19:31:05)
+
+Usage: vim [arguments] [file ..]       edit specified file(s)
+   or: vim [arguments] -               read text from stdin
+   or: vim [arguments] -t tag          edit file where tag is defined
+   or: vim [arguments] -q [errorfile]  edit file with first error
+
+Arguments:
+   --                   Only file names after this
+   -v                   Vi mode (like "vi")
+   -e                   Ex mode (like "ex")
+   -E                   Improved Ex mode
+   -s                   Silent (batch) mode (only for "ex")
+   -d                   Diff mode (like "vimdiff")
+   -y                   Easy mode (like "evim", modeless)
+   -R                   Readonly mode (like "view")
+   -Z                   Restricted mode (like "rvim")
+   -m                   Modifications (writing files) not allowed
+   -M                   Modifications in text not allowed
+   -b                   Binary mode
+   -l                   Lisp mode
+   -C                   Compatible with Vi: 'compatible'
+   -N                   Not fully Vi compatible: 'nocompatible'
+   -V[N][fname]         Be verbose [level N] [log messages to fname]
+   -D                   Debugging mode
+   -n                   No swap file, use memory only
+   -r                   List swap files and exit
+   -r (with file name)  Recover crashed session
+   -L                   Same as -r
+   -A                   Start in Arabic mode
+   -H                   Start in Hebrew mode
+   -T <terminal>        Set terminal type to <terminal>
+   --not-a-term         Skip warning for input/output not being a terminal
+   --ttyfail            Exit if input or output is not a terminal
+   -u <vimrc>           Use <vimrc> instead of any .vimrc
+   --noplugin           Don't load plugin scripts
+   -p[N]                Open N tab pages (default: one for each file)
+   -o[N]                Open N windows (default: one for each file)
+   -O[N]                Like -o but split vertically
+   +                    Start at end of file
+   +<lnum>              Start at line <lnum>
+   --cmd <command>      Execute <command> before loading any vimrc file
+   -c <command>         Execute <command> after loading the first file
+   -S <session>         Source file <session> after loading the first file
+   -s <scriptin>        Read Normal mode commands from file <scriptin>
+   -w <scriptout>       Append all typed commands to file <scriptout>
+   -W <scriptout>       Write all typed commands to file <scriptout>
+   -x                   Edit encrypted files
+   --startuptime <file> Write startup timing messages to <file>
+   -i <viminfo>         Use <viminfo> instead of .viminfo
+   --clean              'nocompatible', Vim defaults, no plugins, no viminfo
+   -h  or  --help       Print Help (this message) and exit
+   --version            Print version information and exit
+------------------------------------------------------------------------------------------
+
  * i : (insert) 파일 내용 작성
  * :wq : 저장후 파일 닫기
  * 바로 파일 생성후 파일 내용 작성 가능
 
+
 5. cat : 파일내용 확인
+------------------------------------------------------------------------------------------
+$ cat --help
+Usage: cat [OPTION]... [FILE]...
+Concatenate FILE(s) to standard output.
+
+With no FILE, or when FILE is -, read standard input.
+
+  -A, --show-all           equivalent to -vET
+  -b, --number-nonblank    number nonempty output lines, overrides -n
+  -e                       equivalent to -vE
+  -E, --show-ends          display $ at end of each line
+  -n, --number             number all output lines
+  -s, --squeeze-blank      suppress repeated empty output lines
+  -t                       equivalent to -vT
+  -T, --show-tabs          display TAB characters as ^I
+  -u                       (ignored)
+  -v, --show-nonprinting   use ^ and M- notation, except for LFD and TAB
+      --help     display this help and exit
+      --version  output version information and exit
+
+Examples:
+  cat f - g  Output f's contents, then standard input, then g's contents.
+  cat        Copy standard input to standard output.
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/cat>
+or available locally via: info '(coreutils) cat invocation'
+------------------------------------------------------------------------------------------
+
 
 6. head : 파일의 위에서 부터 10줄의 내용 확인
+------------------------------------------------------------------------------------------
+$ tail --help
+Usage: tail [OPTION]... [FILE]...
+Print the last 10 lines of each FILE to standard output.
+With more than one FILE, precede each with a header giving the file name.
+
+With no FILE, or when FILE is -, read standard input.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -c, --bytes=[+]NUM       output the last NUM bytes; or use -c +NUM to
+                             output starting with byte NUM of each file
+  -f, --follow[={name|descriptor}]
+                           output appended data as the file grows;
+                             an absent option argument means 'descriptor'
+  -F                       same as --follow=name --retry
+  -n, --lines=[+]NUM       output the last NUM lines, instead of the last 10;
+                             or use -n +NUM to output starting with line NUM
+      --max-unchanged-stats=N
+                           with --follow=name, reopen a FILE which has not
+                             changed size after N (default 5) iterations
+                             to see if it has been unlinked or renamed
+                             (this is the usual case of rotated log files);
+                             with inotify, this option is rarely useful
+      --pid=PID            with -f, terminate after process ID, PID dies
+  -q, --quiet, --silent    never output headers giving file names
+      --retry              keep trying to open a file if it is inaccessible
+  -s, --sleep-interval=N   with -f, sleep for approximately N seconds
+                             (default 1.0) between iterations;
+                             with inotify and --pid=P, check process P at
+                             least once every N seconds
+  -v, --verbose            always output headers giving file names
+  -z, --zero-terminated    line delimiter is NUL, not newline
+      --help     display this help and exit
+      --version  output version information and exit
+
+NUM may have a multiplier suffix:
+b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024,
+GB 1000*1000*1000, G 1024*1024*1024, and so on for T, P, E, Z, Y.
+Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
+
+With --follow (-f), tail defaults to following the file descriptor, which
+means that even if a tail'ed file is renamed, tail will continue to track
+its end.  This default behavior is not desirable when you really want to
+track the actual name of the file, not the file descriptor (e.g., log
+rotation).  Use --follow=name in that case.  That causes tail to track the
+named file in a way that accommodates renaming, removal and creation.
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/tail>
+or available locally via: info '(coreutils) tail invocation'
+------------------------------------------------------------------------------------------
+
 
 7. tail : 파일의 뒤에서 부터 10줄 내용 확인
+------------------------------------------------------------------------------------------
+$ tail --help
+Usage: tail [OPTION]... [FILE]...
+Print the last 10 lines of each FILE to standard output.
+With more than one FILE, precede each with a header giving the file name.
+
+With no FILE, or when FILE is -, read standard input.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -c, --bytes=[+]NUM       output the last NUM bytes; or use -c +NUM to
+                             output starting with byte NUM of each file
+  -f, --follow[={name|descriptor}]
+                           output appended data as the file grows;
+                             an absent option argument means 'descriptor'
+  -F                       same as --follow=name --retry
+  -n, --lines=[+]NUM       output the last NUM lines, instead of the last 10;
+                             or use -n +NUM to output starting with line NUM
+      --max-unchanged-stats=N
+                           with --follow=name, reopen a FILE which has not
+                             changed size after N (default 5) iterations
+                             to see if it has been unlinked or renamed
+                             (this is the usual case of rotated log files);
+                             with inotify, this option is rarely useful
+      --pid=PID            with -f, terminate after process ID, PID dies
+  -q, --quiet, --silent    never output headers giving file names
+      --retry              keep trying to open a file if it is inaccessible
+  -s, --sleep-interval=N   with -f, sleep for approximately N seconds
+                             (default 1.0) between iterations;
+                             with inotify and --pid=P, check process P at
+                             least once every N seconds
+  -v, --verbose            always output headers giving file names
+  -z, --zero-terminated    line delimiter is NUL, not newline
+      --help     display this help and exit
+      --version  output version information and exit
+
+NUM may have a multiplier suffix:
+b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024,
+GB 1000*1000*1000, G 1024*1024*1024, and so on for T, P, E, Z, Y.
+Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
+
+With --follow (-f), tail defaults to following the file descriptor, which
+means that even if a tail'ed file is renamed, tail will continue to track
+its end.  This default behavior is not desirable when you really want to
+track the actual name of the file, not the file descriptor (e.g., log
+rotation).  Use --follow=name in that case.  That causes tail to track the
+named file in a way that accommodates renaming, removal and creation.
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/tail>
+or available locally via: info '(coreutils) tail invocation'
+------------------------------------------------------------------------------------------
+
  * 옵션 
  1) -숫자 : 뒤에서 입력한 숫자만큼 내용 확인 
  ex) -3 : 뒤에서 3줄
 
+
 8. mkdir : 파일생성
+------------------------------------------------------------------------------------------
+$ mkdir --help
+Usage: mkdir [OPTION]... DIRECTORY...
+Create the DIRECTORY(ies), if they do not already exist.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -m, --mode=MODE   set file mode (as in chmod), not a=rwx - umask
+  -p, --parents     no error if existing, make parent directories as needed
+  -v, --verbose     print a message for each created directory
+  -Z                   set SELinux security context of each created directory
+                         to the default type
+      --context[=CTX]  like -Z, or if CTX is specified then set the SELinux
+                         or SMACK security context to CTX
+      --help     display this help and exit
+      --version  output version information and exit
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/mkdir>
+or available locally via: info '(coreutils) mkdir invocation'
+------------------------------------------------------------------------------------------
+
  * 옵션
  1) -p : 하위 디렉토리까지 생성
+
 
 2. [ git 명령어 ]
 ------------------------------------------------------------------------------------------
@@ -416,5 +672,3 @@ d5d2e61 (HEAD -> master) f1 파일수정          <-- 로컬에서 수정한 시
 fe4937f f1 파일생성
 
  3) 레파지토리에 .gitignore 파일을 생성후 파일명을 작성하면 해당 파일 git에 안올라감
-
-
