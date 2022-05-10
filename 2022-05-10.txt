@@ -347,7 +347,7 @@ working directory : git으로 관리하는 공간
  2) git config --global user.email
 -------------------------------------------------------
 
-7. git commit -am : add + commit
+8. git commit -am : add + commit
 
 ********************************************************************************************
   git error  
