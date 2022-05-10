@@ -1,0 +1,420 @@
+1. [ 리눅스 명령어 ]
+
+1. ls : 목록
+------------------------------------------------------------------------------------------
+$ ls --help
+Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                  do not ignore entries starting with .
+  -A, --almost-all           do not list implied . and ..
+      --author               with -l, print the author of each file
+  -b, --escape               print C-style escapes for nongraphic characters
+      --block-size=SIZE      with -l, scale sizes by SIZE when printing them;
+                               e.g., '--block-size=M'; see SIZE format below
+  -B, --ignore-backups       do not list implied entries ending with ~
+  -c                         with -lt: sort by, and show, ctime (time of last
+                               modification of file status information);
+                               with -l: show ctime and sort by name;
+                               otherwise: sort by ctime, newest first
+  -C                         list entries by columns
+      --color[=WHEN]         colorize the output; WHEN can be 'always' (default
+                               if omitted), 'auto', or 'never'; more info below
+  -d, --directory            list directories themselves, not their contents
+  -D, --dired                generate output designed for Emacs' dired mode
+  -f                         do not sort, enable -aU, disable -ls --color
+  -F, --classify             append indicator (one of */=>@|) to entries
+      --file-type            likewise, except do not append '*'
+      --format=WORD          across -x, commas -m, horizontal -x, long -l,
+                               single-column -1, verbose -l, vertical -C
+      --full-time            like -l --time-style=full-iso
+  -g                         like -l, but do not list owner
+      --group-directories-first
+                             group directories before files;
+                               can be augmented with a --sort option, but any
+                               use of --sort=none (-U) disables grouping
+  -G, --no-group             in a long listing, don't print group names
+  -h, --human-readable       with -l and -s, print sizes like 1K 234M 2G etc.
+      --si                   likewise, but use powers of 1000 not 1024
+  -H, --dereference-command-line
+                             follow symbolic links listed on the command line
+      --dereference-command-line-symlink-to-dir
+                             follow each command line symbolic link
+                               that points to a directory
+      --hide=PATTERN         do not list implied entries matching shell PATTERN
+                               (overridden by -a or -A)
+      --hyperlink[=WHEN]     hyperlink file names; WHEN can be 'always'
+                               (default if omitted), 'auto', or 'never'
+      --indicator-style=WORD  append indicator with style WORD to entry names:
+                               none (default), slash (-p),
+                               file-type (--file-type), classify (-F)
+  -i, --inode                print the index number of each file
+  -I, --ignore=PATTERN       do not list implied entries matching shell PATTERN
+  -k, --kibibytes            default to 1024-byte blocks for disk usage;
+                               used only with -s and per directory totals
+  -l                         use a long listing format
+  -L, --dereference          when showing file information for a symbolic
+                               link, show information for the file the link
+                               references rather than for the link itself
+  -m                         fill width with a comma separated list of entries
+  -n, --numeric-uid-gid      like -l, but list numeric user and group IDs
+  -N, --literal              print entry names without quoting
+  -o                         like -l, but do not list group information
+  -p, --indicator-style=slash
+                             append / indicator to directories
+  -q, --hide-control-chars   print ? instead of nongraphic characters
+      --show-control-chars   show nongraphic characters as-is (the default,
+                               unless program is 'ls' and output is a terminal)
+  -Q, --quote-name           enclose entry names in double quotes
+      --quoting-style=WORD   use quoting style WORD for entry names:
+                               literal, locale, shell, shell-always,
+                               shell-escape, shell-escape-always, c, escape
+                               (overrides QUOTING_STYLE environment variable)
+  -r, --reverse              reverse order while sorting
+  -R, --recursive            list subdirectories recursively
+  -s, --size                 print the allocated size of each file, in blocks
+  -S                         sort by file size, largest first
+      --sort=WORD            sort by WORD instead of name: none (-U), size (-S),
+                               time (-t), version (-v), extension (-X)
+      --time=WORD            change the default of using modification times;
+                               access time (-u): atime, access, use;
+                               change time (-c): ctime, status;
+                               birth time: birth, creation;
+                             with -l, WORD determines which time to show;
+                             with --sort=time, sort by WORD (newest first)
+      --time-style=TIME_STYLE  time/date format with -l; see TIME_STYLE below
+  -t                         sort by time, newest first; see --time
+  -T, --tabsize=COLS         assume tab stops at each COLS instead of 8
+  -u                         with -lt: sort by, and show, access time;
+                               with -l: show access time and sort by name;
+                               otherwise: sort by access time, newest first
+  -U                         do not sort; list entries in directory order
+  -v                         natural sort of (version) numbers within text
+  -w, --width=COLS           set output width to COLS.  0 means no limit
+  -x                         list entries by lines instead of by columns
+  -X                         sort alphabetically by entry extension
+  -Z, --context              print any security context of each file
+  -1                         list one file per line.  Avoid '\n' with -q or -b
+      --append-exe           append .exe if cygwin magic was needed
+      --help     display this help and exit
+      --version  output version information and exit
+
+The SIZE argument is an integer and optional unit (example: 10K is 10*1024).
+Units are K,M,G,T,P,E,Z,Y (powers of 1024) or KB,MB,... (powers of 1000).
+Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
+
+The TIME_STYLE argument can be full-iso, long-iso, iso, locale, or +FORMAT.
+FORMAT is interpreted like in date(1).  If FORMAT is FORMAT1<newline>FORMAT2,
+then FORMAT1 applies to non-recent files and FORMAT2 to recent files.
+TIME_STYLE prefixed with 'posix-' takes effect only outside the POSIX locale.
+Also the TIME_STYLE environment variable sets the default style to use.
+
+Using color to distinguish file types is disabled both by default and
+with --color=never.  With --color=auto, ls emits color codes only when
+standard output is connected to a terminal.  The LS_COLORS environment
+variable can change the settings.  Use the dircolors command to set it.
+
+Exit status:
+ 0  if OK,
+ 1  if minor problems (e.g., cannot access subdirectory),
+ 2  if serious trouble (e.g., cannot access command-line argument).
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/ls>
+or available locally via: info '(coreutils) ls invocation'
+------------------------------------------------------------------------------------------
+
+ *옵션
+ 1) -l : 상세
+ 2) -R : 계층
+ 3) -a : 숨김파일까지 확인
+
+2. touch : 파일생성
+
+3. rm : 삭제
+------------------------------------------------------------------------------------------
+$ rm --help
+Usage: rm [OPTION]... [FILE]...
+Remove (unlink) the FILE(s).
+
+  -f, --force           ignore nonexistent files and arguments, never prompt
+  -i                    prompt before every removal
+  -I                    prompt once before removing more than three files, or
+                          when removing recursively; less intrusive than -i,
+                          while still giving protection against most mistakes
+      --interactive[=WHEN]  prompt according to WHEN: never, once (-I), or
+                          always (-i); without WHEN, prompt always
+      --one-file-system  when removing a hierarchy recursively, skip any
+                          directory that is on a file system different from
+                          that of the corresponding command line argument
+      --no-preserve-root  do not treat '/' specially
+      --preserve-root[=all]  do not remove '/' (default);
+                              with 'all', reject any command line argument
+                              on a separate device from its parent
+  -r, -R, --recursive   remove directories and their contents recursively
+  -d, --dir             remove empty directories
+  -v, --verbose         explain what is being done
+      --help     display this help and exit
+      --version  output version information and exit
+
+By default, rm does not remove directories.  Use the --recursive (-r or -R)
+option to remove each listed directory, too, along with all of its contents.
+
+To remove a file whose name starts with a '-', for example '-foo',
+use one of these commands:
+  rm -- -foo
+
+  rm ./-foo
+
+Note that if you use rm to remove a file, it might be possible to recover
+some of its contents, given sufficient expertise and/or time.  For greater
+assurance that the contents are truly unrecoverable, consider using shred.
+
+GNU coreutils online help: <https://www.gnu.org/software/coreutils/>
+Report any translation bugs to <https://translationproject.org/team/>
+Full documentation <https://www.gnu.org/software/coreutils/rm>
+or available locally via: info '(coreutils) rm invocation'
+------------------------------------------------------------------------------------------
+
+ *옵션
+ 1) -d : 비어있는 하위 디렉토리를 삭제
+ 2) -f : 강제
+ 3) -r : 디렉토리 삭제
+
+4. vim : 파일편집
+ * i : (insert) 파일 내용 작성
+ * : wq : 저장후 파일 닫기
+ * 바로 파일 생성후 파일 내용 작성 가능
+
+5. cat : 파일내용 확인
+
+6. head : 파일의 위에서 부터 10줄의 내용 확인
+
+7. tail : 파일의 뒤에서 부터 10줄 내용 확인
+ * 옵션 
+ 1) -숫자 : 뒤에서 입력한 숫자만큼 내용 확인 
+ ex) -3 : 뒤에서 3줄
+
+8. mkdir : 파일생성
+ * 옵션
+ 1) -p : 하위 디렉토리까지 생성
+
+2. [ git 명령어 ]
+------------------------------------------------------------------------------------------
+$ git
+usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
+
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
+------------------------------------------------------------------------------------------
+
+* git 관련 명령어는 앞에 git을 씀
+
+--------------------------------------------
+ [ git init ] > [ git add ] > [ git commit ]
+--------------------------------------------
+
+1. git init : git으로 폴더를 관리하기 위해 사용
+
+2. git status : 현재의 상태
+********************************************************************************************
+  git status
+********************************************************************************************
+1. git에 commit 할 파일이 없음
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+2. 새로운 파일이 디렉토리에 추가
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        [fileName.java]
+nothing added to commit but untracked files present (use "git add" to track)
+
+3. 새로운 파일을 add(커밋할 준비)시킨 후 상태를 확인
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   [fileName.md]
+
+4. 기존 파일이 수정된 후 상태 확인
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   f1.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+********************************************************************************************
+
+3. git add : 파일을 관리하기 위해 사용
+ * 파일이 녹색이 됨 -> commit 해야하는 상태
+ ** git add --all : 모든 파일을 올림
+
+4. git commit : 파일 관리
+ * 옵션 -m : 메세지를 남김
+ ex) git commit -m "메세지" <파일명>
+ ** git commit -m "메세지" : 특정파일이 아닌 모든 파일을 commit
+ 
+5. git rm : 관리 파일 목록에서 제외
+ * git rm --cache <file>
+
+**********************************************
+working directory : git으로 관리하는 공간
+               commit (*기록 관리 가능)
+  파일 관리 ---> staging 영역
+               <--- 
+                rm
+**********************************************
+
+6. git log : 로그확인
+ * 옵션 
+ 1) --oneling : 한줄로 보기
+
+7. git remote : 원격지에 업로드
+-------------------------------------
+ [ git remote add ] > [ git push ]
+-------------------------------------
+ 1) git remote add <원격지 이름> <주소> : 원격지 주소 추가
+  ex) $ git remote add origin https://github.com/hyeinchang/test1.git
+ 2) git remote -v : 원격지 주소 확인
+  ex) $ git remote -v
+ 3) git remote rm <원격지 이름> : 원격지 삭제
+  ex) $ git remote rm origin
+ 4) git push -u <원격지 이름> <사용자> : 원격지에 올림
+  ex) $ git push -u origin master
+ 5) git pull <원격지 이름> <사용자> : 원격지에서 로컬에 내려받음
+  ex) $ git pull origin master
+
+-----------------------------------------------------
+ [ git config ]
+
+1. global user 정보등록
+ 1) git config --global user.name 사용자 이름
+ 2) git config --global user.email 사용자 메일
+
+2. global user 정보확인
+ 1) git config --global user.name
+ 2) git config --global user.email
+-------------------------------------------------------
+
+7. git commit -am : add + commit
+
+********************************************************************************************
+  git error  
+********************************************************************************************
+
+1. $ git commit -m "파일생성" f1.txt
+warning: LF will be replaced by CRLF in f1.txt.
+The file will have its original line endings in your working directory
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'KGITBANK@DESKTOP-QHESK81.(none)')
+
+--> global 사용자 정보 등록 안함
+
+2. $ git log
+fatal: your current branch 'master' does not have any commits yet
+--> git commit 안함
+
+3. $ git commit -m "파일생성" f1.txt
+pathspec 'f2.txt' did not match any file(s) known to git --> git add 하지 않음
+
+4. $ git add f2.txt
+warning: LF will be replaced by CRLF in f2.txt.
+The file will have its original line endings in your working directory --> 줄바꿈 공백
+
+5. $ git commit f2.txt
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        desktop.ini
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+6. $ git commit -am "f1 수정" f1.txt
+fatal: paths 'f1.txt ...' with -a does not make sense
+
+--> 뒤에 파일명 빼야됨
+
+********************************************************************************************
+
+
+3. [ github website ]
+1. 로그인 -> 고양이 -> 파일생성
+ * 옵션 
+ 1) Public : 전체공개
+ 2) Pravate : 일부에게 공개
+ 3) Add .gitignore : window/mac등 운영체제 설정이 다르므로 내가 설정한 것을 숨김
+
+
+4. [ git 기타 사용법 ]
+ 1) git으로 관리할 상위 폴더에 init하면 안됨
+
+ 2) $ git log --oneline
+d5d2e61 (HEAD -> master) f1 파일수정          <-- 로컬에서 수정한 시점
+02cad4d (origin/master) 오후 5:22 정리한 내용 <-- 원격지에 올린 시점
+fe4937f f1 파일생성
+
+ 3) 레파지토리에 .gitignore 파일을 생성후 파일명을 작성하면 해당 파일 git에 안올라감
+
+
