@@ -1,0 +1,360 @@
+
+1. [ git branch ]
+------------------------------------------------------------------------------------------
+ * branch : 작업공간
+------------------------------------------------------------------------------------------
+ git을 사용할 경우 기본적으로 master branch를 제공받음
+ -> 다른 branch를 생성할 경우 master branch가 갖고 있는 것을 복제하여 생성
+ -> master branch에 다른 branch의 내용들을 합침
+------------------------------------------------------------------------------------------
+
+1. git branch 확인/생성/삭제
+ 1) git branch : 현재 존재하는 브런치 확인 가능
+ 2) git branch <브런치 이름> : 새로운 브런치 생성
+ 3) git branch -d <브런치 이름> : 해당 브런치 삭제
+
+
+2. git chackout <브런치 이름> : 해당 브런치로 이동
+
+
+3. 마스터가 최초 파일 생성후 작업자가 작업한 시점 로그 및 작업 결과
+------------------------------------------------------------------------------------------
+< 작업자 브런치 로그 >
+$ git log --oneline
+05406e8 (HEAD -> testbranch) 문제 발생    <-- 작업자 브런치 시점
+5b6d364 로그아웃 구현
+1c8d5cc 로그인 구현
+1fc9a83 (master) 기본프로젝트 생성           <-- 마스터 브런치 시점
+
+< 마스터 브런치 로그 >
+$ git log --oneline
+1fc9a83 (HEAD -> master) 기본프로젝트 생성
+------------------------------------------------------------------------------------------
+< 작업자 브런치 작업목록 >
+$ ls
+login.txt  logout.txt  main-project.txt  test.txt
+
+< 마스터 브런치 작업목록 >
+$ ls
+main-project.txt
+------------------------------------------------------------------------------------------
+
+* git log --oneline --all : 모든 로그 확인
+
+
+4. git merge <브런치 이름> : 해당 브런치가 작업한 것을 합침
+------------------------------------------------------------------------------------------
+$ git merge testbranch
+Updating 1fc9a83..05406e8
+Fast-forward
+ login.txt        | 1 +
+ logout.txt       | 1 +
+ main-project.txt | 3 ++-
+ test.txt         | 1 +
+ 4 files changed, 5 insertions(+), 1 deletion(-)
+ create mode 100644 login.txt
+ create mode 100644 logout.txt
+ create mode 100644 test.txt
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git merge testbranch02
+Updating 05406e8..f0434dd
+Fast-forward
+ aaa.txt | 0
+ bbb.txt | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 aaa.txt
+ create mode 100644 bbb.txt
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git log --oneline
+f0434dd (HEAD -> testbranch02, origin/master, master) testbranch02 생성후 파일생성 <-- master, testbranch02 작업시점
+05406e8 (testbranch) 문제 발생                                                                     <-- testbranch 작업시점
+5b6d364 로그아웃 구현
+1c8d5cc 로그인 구현
+1fc9a83 기본프로젝트 생성
+------------------------------------------------------------------------------------------
+
+
+5. 원격지 업로드 작업 순서
+--------------------------------------------------------------------------------------------------
+ [ git init ] > [ master branch 자동생성 ] > [ (공통파일 생성) ] > [ add + commit ] 
+> [ 작업자 브런치 생성 ] 
+> [ 작업자 checkout ] > [ (공통파일 merge || patch) ] > [ 작업자 작업 ] > [ add + commit ] 
+> [ master checkout ] > [ merge ] > [ add + commit ] > [ push ]
+--------------------------------------------------------------------------------------------------
+* 최초 master의 commit 한 번 이상 있어야 작업자 브런치 생성가능
+* 작업자가 작업후 commit을 해야 작업물이 해당 작업자의 소유가 됨
+
+
+6. git checkout -p <브런치 이름> <파일명> : 패치. 작업자의 특정 파일만 가져옴
+------------------------------------------------------------------------------------------
+$ git checkout -p testbranch test.txt
+diff --git b/test.txt a/test.txt
+index bec4605..b96d60a 100644
+--- b/test.txt
++++ a/test.txt
+@@ -1 +1,2 @@
+-문제 발생
+\ No newline at end of file
++문제 발생
++문제 해결
+\ No newline at end of file
+(1/1) Apply this hunk to index and worktree [y,n,q,a,d,e,?]?
+
+* y : 파일이 없으므로 추가
+* a : append. 해당 작업물의 결과를 추가(해당 줄을 덮어씀)
+------------------------------------------------------------------------------------------
+
+
+7. MERGING : merge가 진행중(완료x)
+
+
+8. 
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+
+ * 옵션
+ 1) 
+
+
+
+2. [  ]
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+
+
+--------------------------------------------
+ [  ] > [  ] > [  ]
+--------------------------------------------
+
+1. 
+
+
+2. 
+********************************************************************************************
+  
+********************************************************************************************
+1. 
+
+2. 
+
+3. 
+
+4. 
+
+
+********************************************************************************************
+
+
+3. 
+
+
+4. 
+ 
+
+5. 
+
+
+
+6. 
+ * 옵션 
+ 1)
+
+
+7. 
+
+
+
+8. 
+
+-----------------------------------------------------
+ [  ]
+
+
+-------------------------------------------------------
+
+
+********************************************************************************************
+  error
+********************************************************************************************
+1. $ git add --all
+warning: LF will be replaced by CRLF in main-project.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in login.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in logout.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in test.txt.
+The file will have its original line endings in your working directory
+---> vim으로 파일 생성 및 작성했을 경우 줄바꿈 공백으로 오류 발생
+---> git bash에서 set fileformat=dos 명령어 입력하여 해결
+------------------------------------------------------------------------------------------
+ 관련내용
+------------------------------------------------------------------------------------------
+1) Vim will look for both dos and unix line endings, but Vim has a built-in preference for the unix format. 
+If all lines in the file end with CRLF, the dos file format will be applied, 
+meaning that each CRLF is removed when reading the lines into a buffer, and the buffer 'ff' option will be dos.
+
+2) 윈도우 환경에서 작성한 파일을 유닉스/리눅스 환경에서 읽으면 에러가 나는 경우가 있다.
+vi를 이용해 해당 파일을 열어보면 ^M 이라는 글자가 찍혀있는 것을 볼 수 있는데,
+^M의 존재가 이러한 에러의 원인이 되는 경우가 있다.
+
+에러가 왜 발생하는지를 알기 위해서 먼저 아래 내용을 이해하자.
+
+(*개행문자 = 줄바꿈 문자)
+  DOS(도스) 개행문자 = 윈도우 개행(Newline)문자
+                           = \r\n
+                           = CR + LF
+                           = 캐리지리턴 + 라인피드
+                           = Window EOL
+ 
+  UNIX(유닉스) 개행문자 = 리눅스 개행문자
+                               = \n
+                               = \LF(라인피드)
+                               = Unix EOL
+
+위와 같이 서로 다른 환경에서는 개행문자 표현이 다르다는 것을 알 수 있다.
+표현이 다르기 때문에 윈도우의 파일의 내용을 리눅스에서 제대로 이해할 리가 없다.
+결국 이 부분을 수정하기 위해서 아래와 같은 작업이 꼭 필요하다! (생각보다 간단하다)
+
+유닉스 텍스트(Unix Text)로 변환 명령
+0. cmd창을 실행
+
+1. vim [file_name: 자신의 파일명].pl 입력
+   - 이렇게 파일을 vim 에디터로 불러온다
+
+2. Esc키를 누른 후
+   :set ff=unix 입력
+
+3. :wq 입력
+   - 위의 명령으로 파일 저장 + vim을 종료한다
+
+
+- 기본적인 vim 사용에 관하여: (blog.lael.be/post/7321)
+- 내용 출처: mwultong.blogspot.com/2007/05/vim-vi-dos-cr-lf-to-unix-newline.html
+------------------------------------------------------------------------------------------
+CR, LF 는 줄바꿈 문자.. 
+DOS<->Unix화일 주고 받을때 종종 문제가 되는데.. 모른척 종종 넘겨버렷으나 이번기회에 대충 집고 넘어가기..
+
+* 유닉스(Unix)/리눅스(Linux)에는, LF (헥사로는 0x0A에 해당) 문자로 줄바꿈을 하고
+
+* 도스(DOS)/윈도우(Windows)에서는, CR-LF (헥사로는 0x0D 0x0A에 해당) 라는 2문자로 줄바꿈을 하고
+
+* 맥(Mac)에서는, CR (헥사로는 0x0D 에 해당) 로 줄바꿈합니다. "\n" 로 표현합니다.
+
+
+줄바꿈 문자는 눈에 보이지 않기 때문에, 파일로 저장한 후, "헥사 뷰어"나, "헥사 에디터"로 보아야 알 수 있다. UltraEdit Edit->Hex Functions을 사용하거나.. 
+cmd> hexdump.pl FileName.txt
+
+유닉스에서 DOS화일을 바꾸는 방법(출처:http://yoonow.tistory.com/56)
+1. vi(m)이 열린 상태 
+1.1 문자 치환 명령 이용 
+
+다음과 같이 문자 치환 명령으로 이 문자를 없애도록 합니다. 
+:1,$s/^M//g 
+
+물론 이것의 입력은 다음과 같이 하도록 합니다. 
+:1,$s/[Control]+v+m을 누른다.//g 
+
+1.2 파일포맷 변경 
+
+vim 5.0 이상에서는 다음과 같이 명령을 내리도록 합니다 
+:set fileformat=unix 
+
+혹은 
+:set ff=unix 
+
+그리고, 저장하고 종료합니다. 
+:wq 
+
+이와 반대로 끝에 ^M 을 붙이려면(과연 누가..) 다음과 같이 합니다. 
+:set fileformat=dos 
+
+이전버전에서는 다음과 같이 합니다. 
+:set textmode 
+
+2. 프롬프트 상에서 
+    2.1 dos2unix 이용 
+
+    dos2unix와 unix2dos를 이용하여 변환할 수 있습니다. 
+
+    다음과 같이 하면 ^M 문자가 없어집니다. 
+    $ dos2unix fileName.txt
+
+    ^M is ascii 15 so :
+    $ sed 's/'`echo "\015"`'//g' file > filenew
+
+  tr -d "\015\032" < dosfile > unixfile
+    015 is CR
+    032 is Ctrl-Z
+
+    그리고 다음과 같이 하면 ^M 문자가 생기죠. 
+    $ unix2dos FileeName.txt
+
+    2.2 cat과 tr을 이용한 방법 
+
+     다음과 같이 하면 해당 파일의 ^M 문자가 없어집니다. 
+     $ cat dos-file | tr -d ^M > unix-file 
+
+    2.3 perl 스크립트 
+
+     다음과 같이 하면 여러파일을 한번에 바꾸게 됩니다. 
+     # perl -i -pe 's/\015//g' *.html 
+
+
+
+*** How to insert CR, LF in SQR ***
+chr(13) is the indicator for Carriage Return (CR).  
+chr(10) is the character for Line Feed (LF).  
+Here is example code that uses both:
+ 
+ let $cr = chr(13)
+ let $lf = chr(10)
+ let $crlf = $cr || $lf
+------------------------------------------------------------------------------------------
+
+
+
+2. $ git commit -am "testbranch02 생성후 파일생성"
+On branch testbranch02
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        aaa.txt
+        bbb.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+---> 최초 commit 전에 git add 하여 처리
+
+
+3. $ git remote add origin https://github.com/hyeinchang/test4.git
+error: remote origin already exists.
+---> 이미 원격지가 존재
+
+
+4. $ git checkout b
+error: Your local changes to the following files would be overwritten by checkout:
+        main-project.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+--> 파일 수정 후 commit을 안함
+********************************************************************************************
+
+
+
+3. [  ]
+
+
+
+
+4. [  ]
+
+
+
+
