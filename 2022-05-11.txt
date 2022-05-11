@@ -4,7 +4,7 @@
  * branch : 작업공간
 ------------------------------------------------------------------------------------------
  git을 사용할 경우 기본적으로 master branch를 제공받음
- -> 다른 branch를 생성할 경우 master branch가 갖고 있는 것을 복제하여 생성
+ -> 다른 branch를 생성할 경우 생성한 시점에 master branch가 갖고 있는 것을 복제하여 생성
  -> master branch에 다른 branch의 내용들을 합침
 ------------------------------------------------------------------------------------------
 
@@ -21,10 +21,10 @@
 ------------------------------------------------------------------------------------------
 < 작업자 브런치 로그 >
 $ git log --oneline
-05406e8 (HEAD -> testbranch) 문제 발생    <-- 작업자 브런치 시점
+05406e8 (HEAD -> testbranch) 문제 발생 <-- 작업자 브런치 시점
 5b6d364 로그아웃 구현
 1c8d5cc 로그인 구현
-1fc9a83 (master) 기본프로젝트 생성           <-- 마스터 브런치 시점
+1fc9a83 (master) 기본프로젝트 생성 <-- 마스터 브런치 시점
 
 < 마스터 브런치 로그 >
 $ git log --oneline
@@ -73,7 +73,7 @@ v
 ------------------------------------------------------------------------------------------
 $ git log --oneline
 f0434dd (HEAD -> testbranch02, origin/master, master) testbranch02 생성후 파일생성 <-- master, testbranch02 작업시점
-05406e8 (testbranch) 문제 발생                                                                     <-- testbranch 작업시점
+05406e8 (testbranch) 문제 발생 <-- testbranch 작업시점
 5b6d364 로그아웃 구현
 1c8d5cc 로그인 구현
 1fc9a83 기본프로젝트 생성
@@ -87,7 +87,7 @@ f0434dd (HEAD -> testbranch02, origin/master, master) testbranch02 생성후 파
 > [ 작업자 checkout ] > [ (공통파일 merge || patch) ] > [ 작업자 작업 ] > [ add + commit ] 
 > [ master checkout ] > [ merge ] > [ add + commit ] > [ push ]
 --------------------------------------------------------------------------------------------------
-* 최초 master의 commit 한 번 이상 있어야 작업자 브런치 생성가능
+* 최초 master의 commit이 한 번 이상 있어야 작업자 브런치 생성가능
 * 작업자가 작업후 commit을 해야 작업물이 해당 작업자의 소유가 됨
 
 
@@ -114,71 +114,157 @@ index bec4605..b96d60a 100644
 7. MERGING : merge가 진행중(완료x)
 
 
-8. 
+8. git reset
+------------------------------------------------------------------------------------------
+* git reset --hard <시점 번호> : 해당 시점 번호로 되돌림
+------------------------------------------------------------------------------------------
+* 지정한 시점으로 돌아감
+* 로그 삭제
+------------------------------------------------------------------------------------------
+$ git log --oneline
+f3ce9a9 (HEAD -> master) 3333 추가
+1088829 2222 추가
+036a110 1111 추가
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git reset --hard 036a110
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git log --oneline
+036a110 (HEAD -> master) 1111 추가
 ------------------------------------------------------------------------------------------
 
+
+9. git revert
+------------------------------------------------------------------------------------------
+* git revert <시점 번호> : 입력한 시점의 바로 뒤의 시점으로 돌아감
+------------------------------------------------------------------------------------------
+* 지정한 시점의 바로 뒤의 시점으로 돌아감
+* 로그가 남아있고 revert 기록도 남음
+* 최종에서 바로 이전 시점으로 되돌렸을 경우 파일에 reverting에 대한 정보 추가 없이 원본 파일로 되돌림
+* 최종에서 두 단계 이상 건너 뛸 경우 REVERTIN 상태가 되며 파일에 reverting에 대한 정보가 추가(수작업 필요)
+------------------------------------------------------------------------------------------
+$ git log --oneline
+da5ab1e (HEAD -> master) test01.txt에 3333 추가
+c4c057a test01.txt에 2222 추가
+036a110 1111 추가
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git revert da5ab1e
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git log --oneline
+284a352 (HEAD -> master) Revert "test01.txt에 3333 추가"
+da5ab1e test01.txt에 3333 추가
+c4c057a test01.txt에 2222 추가
+036a110 1111 추가
 ------------------------------------------------------------------------------------------
 
- * 옵션
- 1) 
+
+2. [ git pull ]
+* push는 github가 중심이 되어야 함
+* github에 있는 내용이 local에 없으면 push가 불가능
+
+1. git push -uf <원격지 이름> <브런치 이름> : 강제로 원격지에 업로드하며 내용은 push한 사람의 local의 내용으로 덮어씀
 
 
+2. git pull : github에 있는 추가적인 내용을 local에 가져옴
+------------------------------------------------------------------------------------------
+ github에 있는 내용이 push하는 사람의 local에 없을 경우
+------------------------------------------------------------------------------------------
+$ git push -u origin master
+To https://github.com/hyeinchang/test05.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/hyeinchang/test05.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 660 bytes | 2.00 KiB/s, done.
+From https://github.com/hyeinchang/test05
+   d007d6b..d7e71a8  master     -> origin/master
+Auto-merging test01.txt
+CONFLICT (content): Merge conflict in test01.txt
+Automatic merge failed; fix conflicts and then commit the result.
 
-2. [  ]
+$ git status
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   test01.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ cat test01.txt
+111111
+222222
+<<<<<<< HEAD
+444444
+=======
+333333
+>>>>>>> d7e71a8108b5784419ce231ffca7389226d2f0c2
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+ 파일수정
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git commit -am "수정하여 업로드"
+[master bb65efe] 수정하여 업로드
+
+$ cat test01.txt
+111111
+222222
+333333
+444444
+------------------------------------------------------------------------------------------
+v
+v
+------------------------------------------------------------------------------------------
+$ git push -u origin master
+Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (6/6), 599 bytes | 599.00 KiB/s, done.
+Total 6 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/hyeinchang/test05.git
+   d7e71a8..bb65efe  master -> master
+branch 'master' set up to track 'origin/master'.
 ------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------
-
-
---------------------------------------------
- [  ] > [  ] > [  ]
---------------------------------------------
-
-1. 
-
-
-2. 
-********************************************************************************************
-  
-********************************************************************************************
-1. 
-
-2. 
-
-3. 
-
-4. 
-
-
-********************************************************************************************
-
-
-3. 
-
-
-4. 
- 
-
-5. 
-
-
-
-6. 
- * 옵션 
- 1)
-
-
-7. 
-
-
-
-8. 
-
------------------------------------------------------
- [  ]
-
-
--------------------------------------------------------
 
 
 ********************************************************************************************
@@ -321,7 +407,6 @@ Here is example code that uses both:
 ------------------------------------------------------------------------------------------
 
 
-
 2. $ git commit -am "testbranch02 생성후 파일생성"
 On branch testbranch02
 Untracked files:
@@ -343,17 +428,52 @@ error: Your local changes to the following files would be overwritten by checkou
         main-project.txt
 Please commit your changes or stash them before you switch branches.
 Aborting
---> 파일 수정 후 commit을 안함
+---> 파일 수정 후 commit을 안함
+
+
+5. $ git push -u origin master
+remote: Not Found
+fatal: repository 'https://github.com/hyein^Ctest04_1.git/' not found
+---> 원격지 주소가 잘못설정
+---> $ git remote get-url origin
+https://github.com/hyein^Ctest04_1.git (원격지 주소 확인)
+---> $ git remote set-url origin https://github.com/hyeinchang/test04_1.git (원격지 주소 재설정)
+------------------------------------------------------------------------------------------
+ 관련내용
+------------------------------------------------------------------------------------------
+$ git remote ger-url origin
+error: Unknown subcommand: ger-url
+usage: git remote [-v | --verbose]
+   or: git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>
+   or: git remote rename [--[no-]progress] <old> <new>
+   or: git remote remove <name>
+   or: git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
+   or: git remote [-v | --verbose] show [-n] <name>
+   or: git remote prune [-n | --dry-run] <name>
+   or: git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]
+   or: git remote set-branches [--add] <name> <branch>...
+   or: git remote get-url [--push] [--all] <name>
+   or: git remote set-url [--push] <name> <newurl> [<oldurl>]
+   or: git remote set-url --add <name> <newurl>
+   or: git remote set-url --delete <name> <url>
+
+    -v, --verbose         be verbose; must be placed before a subcommand
+----------------------------------------------------------------------------------------
+
+
+6. $ git push -u origin master
+To https://github.com/hyeinchang/test05.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/hyeinchang/test05.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+--> github에 있는 내용을 local에 갖고 있지 않아서 발생
+--> git push -uf origin master 하여 강제로 업로드하여 local에 있는 내용으로 github에 있는 내용을 덮어씀(위험함)
+또는 git pull하여 github에 있는 내용을 local에 내려받거나 내려받은 내용을 merge하는 작업을 하고 다시 업로드
 ********************************************************************************************
 
-
-
-3. [  ]
-
-
-
-
-4. [  ]
 
 
 
