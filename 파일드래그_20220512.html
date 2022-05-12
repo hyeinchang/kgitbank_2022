@@ -30,31 +30,25 @@ var textArea = document.getElementById('textArea');
 var uploadArea = document.getElementById('uploadArea');
 var dragFileList = new Array();
 
-//fileArea.onclick = consoleEventPageX;
-//fileArea.draggable = true;
-
 fileArea.ondragover = function(e) {
     e.preventDefault();
-    this.style.background = '#9bf';
-    this.children[0].style.color = '#fff';
+    changeFileArea();
 }
 
 fileArea.ondragleave = function(e) {
     e.preventDefault();
-    this.style.background = '#fff';
-    this.children[0].style.color = '#ddd';
+    resetFileArea();
 }
 
-fileArea.ondrop = consoleEvent;
+fileArea.ondrop = readDragFiles;
 
-function consoleEvent(e) {
+function readDragFiles(e) {
     e.preventDefault();
     var files = e.dataTransfer.files && e.dataTransfer.files;
 
     //console.log(files);
     dragFileList.push(files);
-    this.style.background = '#fff';
-    this.children[0].style.color = '#ddd';
+    resetFileArea();
 
     if (files) {
         var fileUl = document.createElement('ul');
@@ -115,6 +109,16 @@ function makeFileDataUl(file) {
     }
 
     return fileDataUl;
+}
+
+function changeFileArea() {
+    fileArea.style.background = '#9bf';
+    fileArea.children[0].style.color = '#fff';
+}
+
+function resetFileArea() {
+    fileArea.style.background = '#fff';
+    fileArea.children[0].style.color = '#ddd';
 }
 
 //https://inpa.tistory.com/entry/%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD-Drag-Drop-%EA%B8%B0%EB%8A%A5
