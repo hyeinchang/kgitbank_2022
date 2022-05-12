@@ -85,7 +85,7 @@ f0434dd (HEAD -> testbranch02, origin/master, master) testbranch02 생성후 파
  [ git init ] > [ master branch 자동생성 ] > [ (공통파일 생성) ] > [ add + commit ] 
 > [ 작업자 브런치 생성 ] 
 > [ 작업자 checkout ] > [ (공통파일 merge || patch) ] > [ 작업자 작업 ] > [ add + commit ] 
-> [ master checkout ] > [ merge ] > [ add + commit ] > [ push ]
+> [ master checkout ] > [ merge || patch ] > [ add + commit ] > [ push ]
 --------------------------------------------------------------------------------------------------
 * 최초 master의 commit이 한 번 이상 있어야 작업자 브런치 생성가능
 * 작업자가 작업후 commit을 해야 작업물이 해당 작업자의 소유가 됨

@@ -1,0 +1,115 @@
+
+1. [ git clone ] 
+
+1. clone : github에 연결되지 않은 상태에서 내려받음
+------------------------------------------------------------------------------------------
+* pull : github에 연결된 상태에서 내려받음
+* 새로운 공간에서 사용
+------------------------------------------------------------------------------------------
+
+
+2. git clone <원격지 주소> : 해당 원격지의 repository 데이터를 내려받음
+------------------------------------------------------------------------------------------
+$ git clone https://github.com/hyeinchang/test4.git
+Cloning into 'test4'...
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 16 (delta 3), reused 16 (delta 3), pack-reused 0
+Receiving objects: 100% (16/16), done.
+Resolving deltas: 100% (3/3), done.
+
+$ ls
+branch-test/  branch-test02/  my_repos_03/  reset-test/  test4/
+
+$ cd test4/
+
+$ ls
+aaa.txt  bbb.txt  login.txt  logout.txt  main-project.txt  test.txt
+------------------------------------------------------------------------------------------
+* clone으로 내려받은 폴더에는 내려받은 원격지가 연동됨
+* backup할 때도 사용
+
+
+
+2. [ githun branch ]
+
+1. git branch -r : 원격지의 branch를 보여줌
+------------------------------------------------------------------------------------------
+$ git branch -r
+  origin/master
+------------------------------------------------------------------------------------------
+
+
+2. git branch -a : repository와 원격지의 branch를 보여줌
+------------------------------------------------------------------------------------------
+$ git branch -a
+  a-branch
+* master
+  remotes/origin/master
+------------------------------------------------------------------------------------------
+
+
+3. git push <원격지 이름> <브런치 이름> : 해당 원격지에 해당 브런치를 추가
+------------------------------------------------------------------------------------------
+$ git push origin a-branch
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+remote:
+remote: Create a pull request for 'a-branch' on GitHub by visiting:
+remote:      https://github.com/hyeinchang/test07/pull/new/a-branch
+remote:
+To https://github.com/hyeinchang/test07.git
+ * [new branch]      a-branch -> a-branch
+------------------------------------------------------------------------------------------
+
+
+4. git push <원격지 이름> --delete <브런치 이름> : 해당 원격지의 해당 브런치 삭제
+------------------------------------------------------------------------------------------
+$ git push origin --delete a-branch
+To https://github.com/hyeinchang/test07.git
+ - [deleted]         a-branch
+------------------------------------------------------------------------------------------
+
+
+5. git push <원격지 이름> <원격지에 추가한 브런치 이름> : 원격지에 추가한 해당 브런치로 commit한 내용을 올림
+------------------------------------------------------------------------------------------
+$ git push -u origin master
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 246 bytes | 246.00 KiB/s, done.
+Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/hyeinchang/test07.git
+   13026b0..ab6c74d  master -> master
+branch 'master' set up to track 'origin/master'.
+------------------------------------------------------------------------------------------
+
+
+6. git pull 할 경우 해당 원격지의 checkout 되어 있는 해당 브런치의 내용을 가져옴
+
+
+7. git clone을 사용하여 원격지의 repository를 복사했을 경우 원격지에 있는 브런치를 가져옴으로 원격지의 브런치들로 chekout 가능 
+------------------------------------------------------------------------------------------
+$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/a-branch
+  remotes/origin/master
+
+$ git checkout a-branch
+Switched to a new branch 'a-branch'
+branch 'a-branch' set up to track 'origin/a-branch'.
+------------------------------------------------------------------------------------------
+
+
+8. github Collaborators
+------------------------------------------------------------------------------------------
+ github -> 해당 repository -> setting -> collaborators -> Add people -> 메일 승인
+------------------------------------------------------------------------------------------
+* 메일 승인까지 해야 로컬에서 push 가능(권한)
+* 학원 PC에서 403 발생할 경우 자격 증명 관리자 -> Windows 자격 증명 -> github 찾아서 제거
+
+
+
+
