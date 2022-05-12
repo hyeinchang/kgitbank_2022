@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+div {margin: 0; padding: 0; box-sizing: border-box; border-radius: 10px;}
+.backGround {width: 1200px; height: 1000px; /*background: #acf;*/ padding: 50px; }
+#fileArea {width: 800px; height: 300px; border: 1px solid black; margin: 0 auto; background: #fff;}
+#fileArea p {font-size: 85px; width: 100%; text-align: center; font-weight: bold; color: #ddd;}
+#textArea {width: 800px; height: 300px; border: 1px solid black; margin: 15px auto; background: #fff; overflow: auto;}
+#uploadArea {width: 800px; height: 200px; border: 1px solid black; margin: 15px auto; background: #fff; overflow: auto;}
+.fileDataUl {padding : 0;}
+.fileDataUl>li {list-style : none;}
+</style>
+</head>
+<body>
+    <div class="backGround">
+        <div id="fileArea">
+            <p>파일 드래그 영역</p>
+        </div>
+        <div id="textArea"></div>
+        <div id="uploadArea"></div>
+    </div>
+<script language="javascript">
+var fileArea = document.getElementById('fileArea');
+var textArea = document.getElementById('textArea');
+var uploadArea = document.getElementById('uploadArea');
+var dragFileList = new Array();
+
+//fileArea.onclick = consoleEventPageX;
+//fileArea.draggable = true;
+
+fileArea.ondragover = function(e) {
+    e.preventDefault();
+    this.style.background = '#9bf';
+    this.children[0].style.color = '#fff';
+}
+
+fileArea.ondragleave = function(e) {
+    e.preventDefault();
+    this.style.background = '#fff';
+    this.children[0].style.color = '#ddd';
+}
+
+fileArea.ondrop = consoleEvent;
+
+function consoleEvent(e) {
+    e.preventDefault();
+    var files = e.dataTransfer.files && e.dataTransfer.files;
+
+    //console.log(files);
+    dragFileList.push(files);
+    this.style.background = '#fff';
+    this.children[0].style.color = '#ddd';
+
+    if (files) {
+        var fileUl = document.createElement('ul');
+        var fileInputUl = document.createElement('ul');
+        var fileInputLi = document.createElement('li');
+        var fileInput = document.createElement('input');
+
+        fileInput.type = 'file';
+
+        if (files.length > 1) {
+            fileInput.multiple = true;
+        }
+
+        fileInput.files = files;
+
+        fileInputLi.appendChild(fileInput);
+        fileInputUl.appendChild(fileInputLi);
+
+        for (var i=0; i<files.length; i++) {
+            var file = files[i];
+            var fileLi = document.createElement('li');
+            var fileDataUl = makeFileDataUl(file);
+
+            fileLi.appendChild(fileDataUl);
+            fileUl.appendChild(fileLi);            
+        }
+
+        textArea.appendChild(fileUl);
+        uploadArea.appendChild(fileInputUl);
+    }
+}
+
+function makeFileDataUl(file) {
+    var fileDataUl = document.createElement('ul');
+    var fileInfo = [file.name, file.type, file.size];
+
+    fileDataUl.className = 'fileDataUl';
+
+    for (var i=0; i<fileInfo.length; i++) {
+        var fileDataLi = document.createElement('li');
+        var fileDataB = document.createElement('b');
+        var fileDataSpan = document.createElement('span');
+
+        switch(i) {
+            case 0 : fileDataB.innerText = '파일명 : ';
+                break;
+            case 1 : fileDataB.innerText = '파일유형 : ';
+                break;
+            case 2 : fileDataB.innerText = '파일크기 : ';
+                break;
+        }
+
+        fileDataSpan.innerText = fileInfo[i];
+
+        fileDataLi.appendChild(fileDataB);
+        fileDataLi.appendChild(fileDataSpan);
+        fileDataUl.appendChild(fileDataLi);
+    }
+
+    return fileDataUl;
+}
+
+//https://inpa.tistory.com/entry/%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD-Drag-Drop-%EA%B8%B0%EB%8A%A5
+</script>
+</body>
+</html>
