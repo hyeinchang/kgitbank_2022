@@ -14,6 +14,8 @@ div {margin: 0; padding: 0; box-sizing: border-box; border-radius: 10px;}
 #uploadArea {width: 800px; height: 200px; border: 1px solid black; margin: 15px auto; background: #fff; overflow: auto;}
 .fileDataUl {padding : 0;}
 .fileDataUl>li {list-style : none;}
+.starSpan {/*left: 1100px; position: absolute;*/ font-size: 100px;}
+.starSpan:hover {cursor: pointer; color : aqua;}
 </style>
 </head>
 <body>
@@ -22,33 +24,23 @@ div {margin: 0; padding: 0; box-sizing: border-box; border-radius: 10px;}
             <p>파일 드래그 영역</p>
         </div>
         <div id="textArea"></div>
-        <div id="uploadArea"></div>
+        <div id="uploadArea"></div>     
     </div>
 <script language="javascript">
-var fileArea = document.getElementById('fileArea');
-var textArea = document.getElementById('textArea');
-var uploadArea = document.getElementById('uploadArea');
 var dragFileList = new Array();
+var dragTarget = null;
 
-fileArea.ondragover = function(e) {
-    e.preventDefault();
-    changeFileArea();
+document.body.onload = function() {
+    appendStarSpans();
+    addEventArea();
 }
-
-fileArea.ondragleave = function(e) {
-    e.preventDefault();
-    resetFileArea();
-}
-
-fileArea.ondrop = readDragFiles;
 
 function readDragFiles(e) {
-    e.preventDefault();
-    var files = e.dataTransfer.files && e.dataTransfer.files;
+    var files = e.dataTransfer.files.length > 0 && e.dataTransfer.files;
 
     //console.log(files);
     dragFileList.push(files);
-    resetFileArea();
+    resetAreaStyle(fileArea);
 
     if (files) {
         var fileUl = document.createElement('ul');
@@ -78,6 +70,8 @@ function readDragFiles(e) {
 
         textArea.appendChild(fileUl);
         uploadArea.appendChild(fileInputUl);
+    } else {
+        alert('파일이 아닙니다.');
     }
 }
 
@@ -111,14 +105,94 @@ function makeFileDataUl(file) {
     return fileDataUl;
 }
 
-function changeFileArea() {
-    fileArea.style.background = '#9bf';
-    fileArea.children[0].style.color = '#fff';
+function changeAreaStyle(area) {
+    area.style.background = '#9bf';
+
+    if (area == fileArea) {
+        area.children[0].style.color = '#fff';
+    }
+    
 }
 
-function resetFileArea() {
-    fileArea.style.background = '#fff';
-    fileArea.children[0].style.color = '#ddd';
+function resetAreaStyle(area) {
+    area.style.background = '#fff';
+
+    if (area == fileArea) {
+        area.children[0].style.color = '#ddd';
+    }
+}
+
+function appendStarSpans() {
+    var body = document.body;
+
+    for (var i=0; i<10; i++) {
+        var span = document.createElement('span');
+        span.className = 'starSpan';
+        
+        if (i%2 == 0) {
+            span.innerText = '☆'
+        } else {
+            span.innerText = '★'
+        }
+        
+        body.insertBefore(span, body.children[0]);
+    }
+
+    addEventStarSpan();
+}
+
+function addEventStarSpan() {
+    var starSpans = document.getElementsByClassName('starSpan');
+
+    for (var i=0; i<starSpans.length; i++) {
+    var starSpan = starSpans[i];
+
+    starSpan.draggable = true;
+    starSpan.ondblclick = function() {
+        var body = document.body;
+
+        alert('☆★☆★☆★☆★☆★');
+        body.insertBefore(this, body.children[0]);
+    }
+    }
+}
+
+function addEventArea() {
+    var fileArea = document.getElementById('fileArea');
+    var textArea = document.getElementById('textArea');
+    var uploadArea = document.getElementById('uploadArea');
+    var areas = [fileArea, textArea, uploadArea];
+
+    window.ondragstart = function(e) {
+        dragTarget = e.target;
+    }
+
+    for (var i=0; i<areas.length; i++) {
+    var area = areas[i];
+
+    area.ondragover = function(e) {
+        e.preventDefault();
+        changeAreaStyle(this);
+    }
+
+    area.ondragleave = function(e) {
+        e.preventDefault();
+        resetAreaStyle(this);
+    }
+
+    area.ondrop = function(e) {
+        e.preventDefault();
+        resetAreaStyle(this);
+        
+        if (this == fileArea) {
+            readDragFiles(e);
+        } else {
+            if(dragTarget) {
+                this.appendChild(dragTarget);
+            }
+        }
+    }
+    }
 }
 
 //https://inpa.tistory.com/entry/%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD-Drag-Drop-%EA%B8%B0%EB%8A%A5
