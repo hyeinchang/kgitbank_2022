@@ -1,0 +1,22 @@
+1. cmd
+2. dir
+3. help
+4. cd
+5.
+1) vim test 입력
+2) i 키 입력
+3) 안녕하세요 입력
+4) :wq 입력
+6. cat test
+7. rm
+8. 디스크 관리
+9. eclipse
+10. git
+11. git init
+12.
+git add --all
+git commit -m "커밋 메세지"
+git log --oneline
+13.
+git branch
+git branch a-branch

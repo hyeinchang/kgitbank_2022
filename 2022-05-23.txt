@@ -1,0 +1,257 @@
+
+1. [ Collection Framework ]
+* List, Set, Map(부모)
+ - ArrayList(자식)
+ - LinkedList(자식)
+ - Stack(자식)
+
+1. Collection 
+ 1) 다수의 데이터, 데이터 그룹
+ 2) 무한 데이터의 집합 - 자바의 자료구조
+
+
+2. Framework
+ 1) 하나의 틀
+ 2) 표준화된 프로그래밍 방식
+
+
+3. ArrayList
+------------------------------------------------------------------------------------------
+		/*
+		 컬렉션 프레임 워크
+		 컬렉션
+		 - 다수의 데이터, 데이터 그룹
+		 - 무한한 데이터의 집합 - 자바의 자료구조
+		 프레임워크
+		 - 하나의 틀
+		 - 표준화된 프로그래밍 방식
+		 List, Set, Map(부모)
+		 - ArrayList(자식)
+		 - LinkedList(자식)
+		 - Stack(자식)
+		 
+		 ArrayList
+		 - 순서를 유지한다.
+		 - 데이터의 중복을 허용한다.
+		 
+		 자료형 클래스 <-- 객체 : 기능들을 가지고 있음
+		 
+		 */
+		
+		ArrayList arr = new ArrayList();
+		arr.add("123");
+		arr.add("456");
+		
+		System.out.println(arr.get(0));
+		System.out.println(arr.get(1));
+		
+		int arrSize = arr.size();
+		
+		System.out.println(arr.size());
+		System.out.println(arrSize);
+		
+		boolean arrCont1 = arr.contains("123");
+		
+		if (arrCont1 == true) {
+			System.out.println("123은 존재합니다.");
+		}
+		
+		System.out.println(arrCont1);
+		System.out.println(arr.contains("123"));
+		System.out.println(arr.contains("12311"));
+		
+		System.out.println(arr.remove("123"));
+		System.out.println(arr.get(0));
+		System.out.println(arr.size());
+		
+		arr.clear();
+		
+		System.out.println(arr.size());
+		
+		arr.add("라면"); arr.add("소금");
+		arr.add("순대");
+		
+		String index = "소금";
+		int i = arr.indexOf(index);
+		
+		System.out.println(i+"번째 존재함");
+		
+		System.out.println("변경 전 : " + arr.get(1));
+		arr.set(i, "금금");	
+		System.out.println("변경 후 : " + arr.get(1));
+------------------------------------------------------------------------------------------
+ 1) 순서 유지
+ 2) 데이터 중복 허용
+ 3) List를 상속 받음
+------------------------------------------------------------------------------------------
+		Scanner input = new Scanner(System.in);
+		ArrayList<String> nameList = new ArrayList<>();
+		ArrayList<String> phoneList = new ArrayList<>();
+		int num = 0;
+		
+		while(num < 5) {
+			String keyword = "";
+			boolean check = true;
+			int checkNum = 0;
+			int searchIndex = -1;
+			
+			System.out.println("1. 연락처 등록");
+			System.out.println("2. 연락처 보기");
+			System.out.println("3. 연락처 삭제");
+			System.out.println("4. 모든 연락처 보기");
+			System.out.println("5. 프로그램 종료");
+			System.out.print(">> 입력 : ");
+			num = input.nextInt();
+			
+			switch(num) {
+			case 1 :
+				String name = "";
+				String phone = "";
+				check = true;
+				System.out.print(">> 이름 : ");
+				name = input.next();
+				System.out.print(">> 연락처 : ");
+				phone = input.next();
+				
+				if(nameList.indexOf(name) >= 0) {
+					System.out.println("중복된 이름입니다.");
+					check = false;
+				}
+				
+				if(phoneList.indexOf(phone) >= 0) {
+					System.out.println("중복된 번호입니다.");
+					check = false;
+				}
+				
+				if(check) {
+					nameList.add(name);
+					phoneList.add(phone);
+					System.out.println("등록되었습니다.");
+				}
+				
+				break;
+			case 2 :
+				keyword = "";
+				checkNum = 0;
+				searchIndex = -1;
+				
+				System.out.println("1. 이름으로 검색");
+				System.out.println("2. 연락처로 검색");
+				System.out.print(">> 입력 : ");
+				checkNum = input.nextInt();
+				
+				switch(checkNum) {
+				case 1 :
+					System.out.print(">> 이름 : ");
+					keyword = input.next();
+					searchIndex = nameList.indexOf(keyword);
+					break;
+				case 2 :
+					System.out.print(">> 연락처 : ");
+					keyword = input.next();
+					searchIndex = phoneList.indexOf(keyword);
+					break;	
+				}
+
+				if (searchIndex < 0) {
+					System.out.println("등록된 연락처가 없습니다.");
+				} else {
+					System.out.println("이름\t연락처");
+					System.out.println("====================");
+					System.out.println(nameList.get(searchIndex) + "\t" + phoneList.get(searchIndex));
+				}
+				break;	
+			case 3 :
+				keyword = "";
+				checkNum = 0;
+				
+				System.out.println("1. 이름으로 검색");
+				System.out.println("2. 연락처로 검색");
+				System.out.print(">> 입력 : ");
+				checkNum = input.nextInt();
+				
+				switch(checkNum) {
+				case 1 :
+					System.out.print(">> 이름 : ");
+					keyword = input.next();
+					if(nameList.remove(keyword)) {
+						System.out.println("삭제되었습니다.");
+					} else {
+						System.out.println("등록된 연락처가 없습니다.");
+					}
+					break;
+				case 2 :
+					System.out.print(">> 연락처 : ");
+					keyword = input.next();
+					if(phoneList.remove(keyword)) {
+						System.out.println("삭제되었습니다.");
+					} else {
+						System.out.println("등록된 연락처가 없습니다.");
+					}
+					break;	
+				}
+				break;
+			case 4:
+				int size = nameList.size();
+				
+				if(size == 0) {
+					System.out.println("등록된 연락처가 없습니다.");
+				} else {
+					System.out.println("이름\t연락처");
+					System.out.println("====================");
+					
+					for(int i=0; i<size; i++) {
+						System.out.println(nameList.get(i) + "\t" + phoneList.get(i));
+					}
+				}
+				break;
+			case 5:
+				System.out.println("프로그램이 종료되었습니다.");
+				break;
+			}
+			
+			System.out.println("====================");
+		}
+------------------------------------------------------------------------------------------ 
+
+
+
+2. [ VMware ] : 설치하는 컴퓨터의 자원을 끌어다가 다른 가상의 컴퓨터의 공간을 만듬
+ * server :  service를 제공하는 컴퓨터
+ * client :  service를 제공받는 컴퓨터
+ 1) 컴퓨터 설치 : Typical -> 다음에 선택 -> Windows 7 x64 선택 / 설치 폴더 선택 -> 용량선택(*저장할 때마다 선택한 용량만큼 늘어남)
+ -> customize hardware -> memory -> PC사양확인(1. 시스템에서 램 용량확인 2. 작업관리자 -> 성능 -> 메모리 -> 사용가능 용량 확인)
+ -> finish
+ 2) OS 설치 : CD/DVD (SATA) -> ios 또는 실제 cd 선택 -> 컴퓨터 실행 -> 설치 선택
+ * ctrl + alt : 구동된 컴퓨터 화면에서 빠져나옴
+ * guest pc :  가상으로 만든 컴퓨터
+ 3) vmware tools 설치 : VM -> install vmware tools -> 해당 가상 컴퓨터 선택 -> 설치 -> 재시작
+ * 가상 컴퓨터를 제어하기 편리하게 도와주는 도구
+ 4) snapshot : 저장하는 시점까지의 가상 컴퓨터 상태를 저장
+ * 스냅샷을 저장할 때는 가상 컴퓨터를 끄고 저장하는 것이 용량을 적게 차지
+
+
+
+3. [ DB - ORACLE ]
+ 1) Run SQL Command Line 접속 : conn system/1234 입력하여 접속
+ 2) 로컬 PC에서 sqldeveloper를 통해 가상 PC DB 서버 접속
+ -> sqldeveloper에 아이디/비밀번호, 가상 PC IP, sid등을 적절하게 입력
+ -> DB 서버에서 방화벽 인바운드 규칙 1521 포트 추가 -> 로컬 PC에서 접속
+ * system/1234
+ 3) 로컬 PC에 oracle db 설치
+ * 암호 : oracle
+
+
+4. [ 파티션 나누기 ]
+ 1) window + e : 하드디스크 확인 가능
+ 2) 컴퓨터 관리 -> 디스크 관리 -> C드라이브 우클릭 -> 볼륨 축소 -> 용량지정(10000) -> 생성 -> 생성된 디스크 우클릭
+ -> 새 단순 볼륨 -> 용량크기지정 -> 완료
+
+
+
+5. [ 파티션 합치기 ]
+ 1) window + e : 하드디스크 확인 가능
+ 2) 컴퓨터 관리 -> 디스크 관리 -> C드라이브 우클릭 -> 나눠진 파티션 선택 -> 볼륨 삭제 -> 남아있는 디스크에서 볼륨 확장
+
+
+

@@ -1,0 +1,99 @@
+
+4. [ Java - 4 ]
+
+1. switch문
+------------------------------------------------------------------------------------------
+		Scanner input = new Scanner(System.in);
+		int select = 0;
+		
+		System.out.print("수 입력 : ");
+		select = input.nextInt();
+		
+		switch(select) {
+		case 1 : System.out.println("1입력");break;
+		case 2 : System.out.println("2입력");break;
+		case 3 : System.out.println("3입력");break;
+		default : System.out.println("그 외의 값 입력");
+		}
+		
+		char ch;
+		System.out.print("문자 입력 : ");
+		
+		ch = (char) System.in.read();
+		switch(ch) {
+		case 'a' : System.out.println("a입력");break;
+		case 'A' : System.out.println("A입력");
+		}
+		System.out.println("다음 문장들 실행");	
+		
+		String s = "";
+		System.out.print("문자열 입력 : ");
+		s = input.next();
+		switch(s) {
+		case "안녕" : System.out.println("안녕 입력");break;
+		case "그래" : System.out.println("그래 입력");break;
+		}
+		
+		System.out.println("다음 문장들 실행");
+------------------------------------------------------------------------------------------
+		Scanner input = new Scanner(System.in);
+		int num = 0;
+		String day = "";
+		
+		System.out.print("숫자 입력 : ");
+		
+		num = input.nextInt();
+			
+		switch(num%7) {
+		case 1 : day = "월"; break;
+		case 2 : day = "화"; break;
+		case 3 : day = "수"; break;
+		case 4 : day = "목"; break;
+		case 5 : day = "금"; break;
+		case 6 : day = "토"; break;
+		case 7 : day = "일"; break;
+		}
+		
+		System.out.println(day + "요일");
+------------------------------------------------------------------------------------------
+
+
+2. while문
+------------------------------------------------------------------------------------------
+		while (true) {
+			Scanner input = new Scanner(System.in);
+			int num = 0;
+			String day = "";
+			
+			System.out.print("숫자 입력 : ");
+			
+			num = input.nextInt();
+				
+			switch(num%7) {
+			case 1 : day = "월"; break;
+			case 2 : day = "화"; break;
+			case 3 : day = "수"; break;
+			case 4 : day = "목"; break;
+			case 5 : day = "금"; break;
+			case 6 : day = "토"; break;
+			case 7 : day = "일"; break;
+			}
+			
+			System.out.println(day + "요일");
+		}
+------------------------------------------------------------------------------------------
+
+
+3. 변수 초기화
+------------------------------------------------------------------------------------------
+		int num = 10, su = 0;
+		char ch = 0;
+		double dou = 0;
+		String str = null;
+------------------------------------------------------------------------------------------
+ * 첫번째 글자가 소문자인 자료형의 변수는 0으로 초기화
+ * 첫번째 글자가 대문자인 자료형의 변수는 null로 초기화 
+
+
+
+

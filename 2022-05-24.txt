@@ -1,0 +1,209 @@
+
+1. [ 데이터베이스 - 1 ]
+
+1. sqldeveloper 계정 생성 및 권한 부여
+------------------------------------------------------------------------------------------
+create user hyein identified by 9148; -- 사용자 생성
+
+grant dba to hyein; -- 권한 부여
+------------------------------------------------------------------------------------------
+ 1) 로컬의 sqlveloper를 실행시켜 system/oracle 계정으로 접속
+ 2) 사용자 생성 : create user_name identified by user_password;
+  * ctrl + enter : 실행
+ 3) 생성한 사용자에게 권한 부여 : grant 권한 to user_name;
+ 4) 위의 사용자로 접속
+
+
+2. table : 정보를 저장하기 위한 틀
+------------------------------------------------------------------------------------------
+/* 테이블 생성 */
+create table person(
+    num number
+    , name varchar2(10)
+    , birth varchar2(10)
+    , tel varchar2(20)
+    , primary key(num)
+);
+
+/* 테이블에 데이터 입력 */
+insert into person values(1, '홍길동', '20200524', '01000000000');
+insert into person(num, tel, name, birth) values(2, '01039057027', '장혜인', '19910408');
+
+/* 테이블에 있는 데이터 조회 */
+select * from person;
+select name, tel from person;
+
+/* 테이블에 있는 특정 컬럼의 특정 조건으로 데이터 조회 */
+select * from person where num = 1;
+select * from person where name = '홍길동';
+
+/* 테이블의 데이터 삭제 */
+delete from person;
+
+/* 테이블의 특정 데이터 삭제 */
+delete from person where num = 2
+
+/* 테이블의 데이터 수정 */
+update person set name = '홍홍홍', birth = '1212' where num = 1;
+
+commit;
+rollback;
+
+/* 테이블 구조 확인 */
+create table test_table(num number);
+desc test_table;
+
+/* 테이블 구조 변경 */
+alter table test_table add(name varchar2(20));
+alter table test_table modify(name number);
+alter table test_table rename column name to name_nnn;
+alter table test_table drop column name_nnn;
+
+/* 테이블 삭제 */
+drop table test_table;
+
+/* 사용자 조회 */
+select * from all_users;
+
+/* 사용자 삭제 */
+create user test123 identified by 1234;
+drop user test123;
+drop user test123 cascade;
+------------------------------------------------------------------------------------------
+ 1) 테이블 생성 : create table table_name(column_name1 자료형, column_name2 자료형, ... ,column_nameN 자료형, primary key(primary_key_column_name));
+  * primary key : 유일한 값
+
+ 2) 테이블에 데이터 입력
+  2-1) 생성한 column의 순서대로 모든 데이터 입력
+      : insert into table_name values(primary_key, data1, data2, ..., dataN);
+  2-2) column과 순서를 지정하여 데이터 입력
+      : insert into table_name(column_name1, column_name1, ..., column_name1, column_nameN) values(data1, data2, ... ,dataN);
+  * primary key column에 해당되는 데이터는 중복을 허용하지 않음
+
+ 3) 테이블에 있는 데이터 조회
+  3-1) 모든 데이터 조회 : select * from table_name;
+  3-2) 특정 column만 조회 : select colnumn_name1, ..., colnumn_nameN from table_name;
+  3-3) 특정 조건으로 데이터 조회
+      : select * from table_name where 조건;
+
+ 4) 테이블의 데이터 삭제
+  4-1) 모든 데이터 삭제 : delete from table_name;
+  4-2) 특정 데이터 삭제 : delete from table_name where 조건;
+
+ 5) 테이블의 데이터 수정 : update table_name set column_name1 = data1, ..., column_nameN = dataN where 조건;
+ 
+ 6) commit : 작업한 내용을 완전히 저장. 확정지음
+------------------------------------------------------------------------------------------
+데이터 조회 : [ db tool ] <- [ 임시저장소 ] <- [ DB ]
+데이터 수정 : ( [ db tool ] -> [ 임시저장소 ] ) - (commit) -> [ DB ]
+------------------------------------------------------------------------------------------
+ 
+ 7) rollback : commit한 순간까지의 데이터로 되돌림
+------------------------------------------------------------------------------------------
+rollback : [ db tool ] <- [ DB ]
+------------------------------------------------------------------------------------------
+ 
+ 8) 테이블 구조 확인 : desc table_name
+
+ 9) 테이블 구조 변경
+  9-1) column 추가 : alter table table_name add(column_name 자료형));
+  9-2) column 자료형 변경 : alter table table_name modify(column_name 자료형));
+  9-3) column 이름 변경 : alter table table_name rename column_name to new_column_name;
+  9-4) column 삭제 : alter table table_name drop column_name;
+ 
+ 10) 테이블 삭제 : drop table table_name;
+ 11) 사용자 조회 : select * from all_users;
+ 12) 사용자 삭제 : drop user user_name;
+  * CASCADE : 테이블이 존재하는 유저 삭제 > drop user user_name cascade;
+
+
+
+2. [ 데이터베이스 - 2 ]
+
+1. [ sqldeveloper 연산 ]
+------------------------------------------------------------------------------------------
+/* 비교 연산 */
+select * from student;
+select * from student where eng >= 90;
+select * from student where eng != 90;
+
+/* 더하기, 나누기, 나머지 연산 */
+select math+10, math/2, mod(math, 3) from student;
+
+/* and, or 연산 */
+select * from student where kor >= 10 and math >= 90;
+select * from student where kor >= 10 or math >= 90;
+
+/* not 연산 */
+select * from student where not kor = 100;
+
+/* between 연산 */
+select * from student where kor >= 50 and kor <= 90;
+select * from student where kor between 50 and 90;
+------------------------------------------------------------------------------------------
+ 1) 조건 연산 : <, >, =, <=, >=, !=
+ 2) and, or, not 연산
+ 3) 수학 연산
+  * 나머지 연산 : mod(column_name, 제수(除數, divisor))
+ 4) between 연산 : column_name between min_value and max_value;
+
+
+2. 자료형
+------------------------------------------------------------------------------------------
+create table test_number(
+    numps number(5,2), -- (실수값 자릿수, 소수값 자릿수)
+    nump number(3), -- (3자리 정수만 사용)
+    num number -- 입력하는 값 그대로 자동으로 크기를 만듬
+);
+
+/* 숫자 */
+insert into test_number values(1.123456, 1.123456, 1.123456);
+insert into test_number values(1234.123456, 1.123456, 1.123456); -- ORA-01438: value larger than specified precision allowed for this column
+-- 소수에 대한 값은 범위를 벗어나면 알아서 잘리지만 정수에 대한 값은 범위를 벗어나면 오류 발생
+insert into test_number values(1.12, 123, 1.12);
+
+/* 날짜 */
+create table test_date(my_date date);
+insert into test_date values(sysdate);
+insert into test_date values('2019/02/02');
+select * from test_date;
+
+alter session set nls_date_format = 'YYYY/MM/DD HH:MI:SS';
+
+insert into test_date values('2019/02/02 12:12:12');
+
+select * from test_date where my_date < '2022/01/01';
+------------------------------------------------------------------------------------------
+ 1) number
+  1-1) column_name number(n, m) : n자리 정수, m자리 소수 저장 가능
+  1-2) column_name number(n) : n자리 정수 저장 가능
+  1-3) column_name numbe : 입력한 자릿수까지 범위가 늘어남
+  * 소수에 대한 값은 범위를 벗어나면 알아서 잘리지만 정수에 대한 값은 범위를 벗어나면 오류 발생
+ 
+ 2) date
+  2-1) column_name date : 날짜 형식으로 입력 가능
+  * sysdate : 현재 날짜
+  2-2) 출력되는 날짜 형식 변경 : alter session set nls_date_format = '날짜 형식';
+
+
+4. like절 : 조걸절에 해당 조건이 포함된 데이터를 가져옴
+------------------------------------------------------------------------------------------
+select * from employee where name like '김%';
+select * from employee where name like '%똥%';
+select * from employee where name like '%이';
+------------------------------------------------------------------------------------------
+
+
+5.  정렬
+------------------------------------------------------------------------------------------
+select * from employee order by join_company desc;
+select * from employee order by join_company asc;
+select * from employee order by join_company asc, name desc;
+select * from employee order by join_company asc, salary asc;
+------------------------------------------------------------------------------------------
+ 1) 오름차 순 : order by column_name asc
+ 2) 내림차 순 : order by column_name desc
+
+
+
+
