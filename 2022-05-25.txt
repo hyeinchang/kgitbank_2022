@@ -1,0 +1,194 @@
+
+1. [ 데이터베이스 - 1 ]
+
+1. 함수 
+------------------------------------------------------------------------------------------
+create table testfunc(id number, num varchar2(20));
+insert into testfunc values(1, '34.5678');
+select * from testfunc where id = 1;
+select round(num, 2) from testfunc where id = 1;
+select round(num/2, 2) from testfunc where id = 1;
+select trunc(num, 2) from testfunc where id = 1;
+insert into testfunc values(2, '55');
+select mod(num, 2)from testfunc where id = 2;
+
+insert into testfunc values(11, 'welcome To oracle');
+
+select * from testfunc where id = 11;
+select upper(num) from testfunc where id = 11; -- WELCOME TO ORACLE
+select lower(num) from testfunc where id = 11; -- welcome to oracle
+select initcap(num) from testfunc where id = 11; -- Welcome To Oracle
+
+create table testCompany(
+  name varchar2(20),
+  연봉 varchar2(20),
+  class varchar2(20)
+);
+
+insert into testCompany values('hong gil dong_M','3600','Manager');
+insert into testCompany values('kim gea ddong_M','2555','ManaGer');
+insert into testCompany values('Go gil dong_M','2800','ManaGER');
+insert into testCompany values('hong gil dong_E','3111','EmpLoyee');
+insert into testCompany values('kim gea ddong_E','2600','EmpLoYee');
+insert into testCompany values('Go gil dong_E','2950','employee');
+
+
+select * from testCompany where initcap(class) = 'Manager';
+select * from testCompany where initcap(class) = 'Employee' and 연봉 >= 2800;
+select initcap(name) 사원명, trunc(연봉/12, 0) as 급여 from testCompany order by name;
+select upper(substr(name, 0, 1))||lower(substr(name, 1, length(name))) 사원명, trunc(연봉/12, 0) as 급여 from testCompany order by name;
+
+select sum(score), avg(score), max(score), min(score), count(class) from testClass;
+select count(*) from testClass;
+------------------------------------------------------------------------------------------ 
+ 1) round(column_name, 소수점 자릿수) : 해당 소수점 자리까지 반올림
+ 2) trunc(column_name, 소수점 자릿수) : 해당 소수점 자리까지 버림
+ 3) mod(column_name, 제수) : 나머지 값을 구함
+ 4) upper(column_name) : 모든 문자를 대문자로 변환
+ 5) initcap(column_name) : 모든 문자의 첫번째(& 공백 다음) 문자를 대문자로 변환
+ 6) sum(column_name) : 해당 컬럼의 합의 구함
+ 7) avg(column_name) :  해당 컬럼의 평균을 구함
+ 8) max(column_name) : 해당 컬럼의 최대값을 구함 
+ 9) min(column_name) : 해당 컬럼의 최소값을 구함
+ 10) count(column_name) : 해당 컬럼의 입력된 열의 개수를 구함
+ 11) count(*) : 모든 열의 개수를 구함
+
+
+2. group by절 : 해당 값을 그룹으로 묶어서 출력
+------------------------------------------------------------------------------------------
+select * from testClass;
+------------------------------------------------------------------------------------------
+CLASS | SCORE
+A반	11
+A반	12
+A반	13
+B반	21
+B반	22
+B반	23
+1	31
+1	32
+1	33
+	40
+------------------------------------------------------------------------------------------
+select class, sum(score) from testClass group by class;
+------------------------------------------------------------------------------------------
+CLASS | SCORE
+A반	36
+1	96
+	40
+B반	66
+------------------------------------------------------------------------------------------
+select class, sum(score) from testClass group by class having sum(score) > 40;
+------------------------------------------------------------------------------------------
+CLASS | SCORE
+1	96
+B반	66
+------------------------------------------------------------------------------------------
+ * 조건절은 having절로 작성
+
+
+3. join
+------------------------------------------------------------------------------------------
+select * from testName;
+------------------------------------------------------------------------------------------
+ID | CLASS
+홍길동	A반
+김개똥	B반
+고길동	C반
+------------------------------------------------------------------------------------------
+select * from testLesson;
+------------------------------------------------------------------------------------------
+ID | LESSON | SCORE
+홍길동	python	80
+홍길동	java	90
+홍길동	c언어	70
+김개똥	server2012	70
+김개똥	linux	90
+고길동	jsp	100
+------------------------------------------------------------------------------------------
+/* cross join */
+select * from testName, testLesson;
+------------------------------------------------------------------------------------------
+ID | CLASS | ID_1 | LESSON | SCORE
+홍길동	A반	홍길동	python	80
+홍길동	A반	홍길동	java	90
+홍길동	A반	홍길동	c언어	70
+홍길동	A반	김개똥	server2012	70
+홍길동	A반	김개똥	linux	90
+홍길동	A반	고길동	jsp	100
+김개똥	B반	홍길동	python	80
+김개똥	B반	홍길동	java	90
+김개똥	B반	홍길동	c언어	70
+김개똥	B반	김개똥	server2012	70
+김개똥	B반	김개똥	linux	90
+김개똥	B반	고길동	jsp	100
+고길동	C반	홍길동	python	80
+고길동	C반	홍길동	java	90
+고길동	C반	홍길동	c언어	70
+고길동	C반	김개똥	server2012	70
+고길동	C반	김개똥	linux	90
+고길동	C반	고길동	jsp	100
+------------------------------------------------------------------------------------------
+/* inner join */
+select A.*, B.lesson, B.score from testName A inner join testLesson B on A.id = B.id;
+------------------------------------------------------------------------------------------
+ID | CLASS | LESSON | SCORE
+홍길동	A반	python	80
+홍길동	A반	java	90
+홍길동	A반	c언어	70
+김개똥	B반	server2012	70
+김개똥	B반	linux	90
+고길동	C반	jsp	100
+------------------------------------------------------------------------------------------
+select A.*, B.lesson, B.score from testName A inner join testLesson B on A.id = B.id where A.id = '홍길동';
+------------------------------------------------------------------------------------------
+ID | CLASS | LESSON | SCORE
+홍길동	A반	python	80
+홍길동	A반	java	90
+홍길동	A반	c언어	70
+------------------------------------------------------------------------------------------
+select A.id, A.class, sum(B.score) 합, avg(B.score) 평균 from testName A inner join testLesson B on A.id = B.id
+group by A.id, A.class order by class;
+------------------------------------------------------------------------------------------
+ID | CLASS | 합 | 평균
+홍길동	A반	240	80
+김개똥	B반	160	80
+고길동	C반	100	100
+------------------------------------------------------------------------------------------
+ 1) cross join : select * from table_name1, table_name2, ... ,table_nameN;
+ 2) inner join : select * from table_name1 A inner join table_name2 on A.column_name = B.column_name
+
+
+4. subquery : sql문 내에 sql문을 쓰는 것
+------------------------------------------------------------------------------------------
+select * from testname where id = (select id from testlesson where lesson = 'python');
+select * from employee where salary > (select avg(salary) from employee);
+select * from employee where (salary < (select avg(salary) from employee)) and (job = '삼성' or job = '엘지') order by salary;
+------------------------------------------------------------------------------------------
+
+
+
+2. [ 데이터베이스 - 2 ]
+
+1. ERD(Entity Relationship Diagram) : 데이터베이스 구조를 한 눈에 알아보기 위해 그려놓는 다이어그램.
+ERD는 단어에서 의미하는 그대로 'Entity 개체'와 'Relationship 관계'를 중점적으로 표시하는 다이어그램
+
+
+2. 외래 키(foreign key) : 관계형 데이터베이스에서 왜래 키는 한 테이블의 필드 중 다른 테이블의 행을 식별할 수 있는 키
+* 두 테이블을 서로 연결하는데 사용되는 키
+------------------------------------------------------------------------------------------
+ ALTER TABLE board
+    ADD CONSTRAINT FK_board_b_id_membership_m_id FOREIGN KEY (b_id)
+        REFERENCES membership (m_id);
+
+
+alter table board drop constraint FK_board_b_id_membership_m_id;
+
+ALTER TABLE board
+    ADD CONSTRAINT FK_board_b_id_membership_m_id FOREIGN KEY (b_id)
+        REFERENCES membership (m_id) on delete cascade;
+------------------------------------------------------------------------------------------
+
+
+
+
