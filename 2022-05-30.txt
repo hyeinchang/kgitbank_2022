@@ -1,0 +1,256 @@
+
+6. [ Java - 6 ]
+
+1. Set
+------------------------------------------------------------------------------------------
+		ArrayList arr = new ArrayList();
+		arr.add("홍길동"); arr.add("홍길동");
+		System.out.println("arr : " + arr);
+		
+		HashSet hs = new HashSet(); // 변수 선언시 16개의 공간을 미리 만들어 놓음 -> 순서 없이 저장
+		hs.add("홍길동"); hs.add("김개똥");
+		hs.add("홍길동");
+		System.out.println("hs : " + hs);
+		System.out.println(hs.remove("홍길동"));
+		System.out.println("hs : " + hs);
+		
+		hs.add("홍길동");
+		System.out.println(arr.get(0));
+		System.out.println("==============================");
+		// 반복자
+		//* bof : 시작점 / * eof :마지막점
+		Iterator it = arr.iterator(); 		// it=['bof', '홍길동', '홍길동', 'eof']
+		/*System.out.println(it.hasNext());	//        it
+		System.out.println(it.next());		// 	      it
+		
+		System.out.println(it.next());
+		
+		System.out.println(it.hasNext());*/
+		
+		while(it.hasNext()) {
+			System.out.println(it.next());
+		}
+		System.out.println("==============================");
+		it = hs.iterator();
+		while(it.hasNext()) {
+			//String s = (String)it.next();
+			Object s = it.next();
+			String st = (String) s;
+			System.out.println(s);
+		}
+------------------------------------------------------------------------------------------
+arr : [홍길동, 홍길동]
+hs : [홍길동, 김개똥]
+true
+hs : [김개똥]
+홍길동
+==============================
+홍길동
+홍길동
+==============================
+홍길동
+김개똥
+------------------------------------------------------------------------------------------
+ 1) 순서를 유지하지 않음
+ 2) 중복된 값을 허용하지 않음
+ 3) 변수 선언시 미리 16개의 공간을 만들어 놓고 순서 없이 저장
+ 4) get함수를 사용하지 못하므로 반복자를 이용하여 값을 가져옴
+
+
+2. java.util.Iterator
+ 1) 반복자
+ 2) 변수 선언 : Iterator it = arr.iterator();
+ 3) 변수 구조 : it=['bof', '홍길동', '홍길동', 'eof']
+  * bof : 시작점 / * eof :마지막점
+ 4) it.hasNext() : 현재 시점 이후에 변수가 있는지 여부를 true/false로 반환
+ 5) it.next() : 현재 시점 이후의 변수를 가져옴
+
+
+3. Map
+------------------------------------------------------------------------------------------
+		HashMap map = new HashMap();
+		map.put("선풍기", "100만원");
+		map.put("에어컨", "50만원");
+		map.put("자동차", "10만원");
+		
+		map.put("선풍기", "1000만원");
+		
+		System.out.println(map);
+		
+		System.out.println(map.get("선풍기"));
+		System.out.println(map.get("에어컨"));
+		System.out.println(map.get("자동차"));
+		System.out.println(map.get("없는 값"));
+		
+		System.out.println("==============================");
+		
+		System.out.println(map.containsKey("자동차"));
+		System.out.println(map.containsKey("ㅁㅁㅁ"));
+		
+		System.out.println("==============================");
+		
+		map.remove("선풍기");
+		System.out.println(map);
+		
+		System.out.println(map.keySet());
+		
+		//Set set = map.keySet();
+		//Iterator it = set.iterator();
+		
+		System.out.println("==============================");
+		
+		Iterator it = map.keySet().iterator();
+		// it = [bof, 자동차, 선풍기, eof]
+		// map = {자동차 : 10만원, 선풍기 : 100만원}
+		while(it.hasNext()) {
+			//String key = (String) it.next();
+			//String value = (String) map.get(key);
+			String s = (String) it.next();
+			System.out.println(s + " : " + map.get(s));
+		}
+		
+		String k = "우리집", v = "종로 3가";
+		map.put(k, v);
+		
+		Scanner input = new Scanner(System.in);
+		System.out.print("찾을 값 입력 : ");
+		String search = input.next();
+		
+		if (map.get(search) == null) {
+			System.out.println("존재하지 않는 주소");
+		} else {
+			System.out.println(search + " : " + map.get(search));
+		}
+------------------------------------------------------------------------------------------
+{에어컨=50만원, 선풍기=1000만원, 자동차=10만원}
+1000만원
+50만원
+10만원
+null
+==============================
+true
+false
+==============================
+{에어컨=50만원, 자동차=10만원}
+[에어컨, 자동차]
+==============================
+에어컨 : 50만원
+자동차 : 10만원
+찾을 값 입력 : 우리집
+우리집 : 종로 3가
+------------------------------------------------------------------------------------------
+ 1) 키와 값으로 하나의 쌍으로 이루어짐
+ 2) 순서는 유지되지 않음
+ 3) 키의 중복은 허용하지 않음
+ 4) map.put("키", "값) : 해당 키에 해당 값을 넣음
+ 5) map.get("키") : 해당 키의 해당 값을 가져옴
+ 6) map.containsKey("키") : 해당 키가 있는 지 여부를 true/false로 반환
+ 7) map.remove("키") : 해당 키를 삭제
+ 8) map.keySet() : 키 목록을 가져옴
+
+
+4. Class
+------------------------------------------------------------------------------------------
+package day09;
+
+public class TestClass01 {
+	String name;
+	String addr;
+	int age;
+}
+------------------------------------------------------------------------------------------
+package day09;
+
+public class MainClass01 {
+	public static void main(String[] args) {
+		TestClass01 t = new TestClass01();
+		// t. (. : 멤버 접근 연산자)
+		t.name = "홍길동";
+		t.age = 20;
+		System.out.println(t.name + " " + t.age);
+	}
+}
+------------------------------------------------------------------------------------------
+ 1) 반복적으로 사용하는 것에 대한 하나의 틀
+ 2) 하나의 자료형
+ 3) 객체
+ 4) 클래스를 자료형으로 변수 선언 -> 변수 + < . > -> 클래스의 변수/메소드 가져옴
+  * . : 멤버 접근 연산자
+ 5) 클래스를 자료형으로 변수를 선언한 변수를 '참조형 변수'라고 함
+
+
+5. class export and import
+ 1) 새로운 프로젝트 생성하여 클래스 생성
+ 2) export -> jar -> 위치 지정 후 finish
+ 3) export한 class를 사용할 프로젝트에서 build path -> libraries -> Classpath -> Add External JARs -> 해당 jar선택 -> apply
+ 
+
+6. 객체 지향 언어 : 객체로 구성
+ 1) 객체(Object) : 물리적으로 존재하거나 추상적으로 생각할 수 있는 것 중에서 자신의 속성을 가지고 있고 다른 것과 식별 가능한 것 
+ 2) 장점 : 편리함
+ 3) 단점 : 무거움
+
+
+7. 절차 지향 언어 : 틀이 없고 기능별로 나뉘어 있음
+ 1) 장점 : 필요한 것만 사용 가능
+ 2) 단점 : 용이성이 떨어짐
+
+
+8. 접근 제한자
+ 1) public : 클래스 내부, 외부에서 접근 가능
+ 2) private : 클래스 내부에서만 접근 가능
+ 3) protected : 상속받은 자식 또는 내부에서 접근 가능
+ 4) default : 같은 패키지 안에서 접근 가능
+
+
+4. 메소드(method)
+------------------------------------------------------------------------------------------
+package day09;
+
+public class TestClass02 {
+	// 접근제한자 반환타입(return type) 메소드명(매개변수(argument) {}
+	public void test() {
+		test2();
+		System.out.println("test 메소드 실행");
+	}
+	
+	public void test1() {
+		System.out.println("test1 메소드 실행");
+	}
+	
+	public void test2() {
+		test1();
+		System.out.println("test2 메소드 실행");
+	}
+}
+------------------------------------------------------------------------------------------
+package day09;
+
+public class MainClass02 {
+	public static void main(String[] args) {
+		TestClass02 t01 = new TestClass02(); //참조형 변수
+		System.out.println("main 시작");
+		t01.test();
+		System.out.println("main 종료");
+	}
+}
+------------------------------------------------------------------------------------------
+main 시작
+test1 메소드 실행
+test2 메소드 실행
+test 메소드 실행
+main 종료
+------------------------------------------------------------------------------------------
+ 1) 메소드 생성 : <접근제한자> <반환타입(return type)> <메소드명>(<매개변수(argument)>) {}
+ 2) 메소드 이름은 기능에 부합하는 이름으로 짓는 것이 좋음
+
+
+5. debuging 단축키
+ 1) 해당 위치에 break point 더블 클릭으로 설정
+ 2) F11로 실행
+ 3) F6으로 break point부터 순차적으로 실행
+ 4) F5누르면 해당 위치의 해당 클래스로 이동
+ 5) Ctrl + F2 : 종료
+
+
+

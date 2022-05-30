@@ -1,0 +1,34 @@
+1. ping
+2. ipconfig
+3. jdk
+4. sqldeveloper
+5. create table member(
+ id varchar2(20),
+ name varchar2(20),
+ addr varchar2(20),
+ primary key(id)
+);
+6. create table member_tbl_02(
+ custno number(6) not null primary key,
+ custname varchar2(20),
+ phone varchar2(13),
+ address varchar2(60),
+ joindate date,
+ grade char(1),
+ city char(2)
+);
+
+comment on column member_tbl_02.custno is '회원번호';
+comment on column member_tbl_02.custname is '회원성명';
+comment on column member_tbl_02.phone is '회원전화';
+comment on column member_tbl_02.address is '주소';
+comment on column member_tbl_02.joindate is '가입일자';
+comment on column member_tbl_02.grade is '고객등급';
+comment on column member_tbl_02.city is '거주도시';
+7. alter table goods add constraint FK_good_id_member_id foreign key(user_id) references member(id) on delete cascade;
+8. insert into member(id, name, addr) values ('abcd', '김말이', '분식집');
+9. create sequence custno_seq
+start with 100001
+increment by 1;
+
+insert into member_tbl_02(custno, custname, phone, address, joindate, grade, city) values(custno_seq.nextval, '홍길동', '010-1234-1234', '산골짜기', '2022/05/15', 'A', '60');
